@@ -46,6 +46,8 @@ const validCommands = [
 
 const exceptions = [
     'ticket_modal',
+    'clear_cancel',
+    'clear_confirm'
 ]
 
 export default validCommands
