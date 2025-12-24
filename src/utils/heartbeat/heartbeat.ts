@@ -7,7 +7,9 @@ export default async function heartbeat() {
         // out requests when testing locally without a vpn.
         if (config.kubernetesServicePort) {
             schedule('* * * * *', async() => {
-                const response = await fetch(config.heartbeatUrl)
+                const response = await fetch(config.heartbeatUrl, {
+                    method: 'POST'
+                })
 
                 if (!response.ok) {
                     throw new Error(await response.text())
