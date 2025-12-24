@@ -79,7 +79,10 @@ const config = {
     api: TEKKOM_BOT_API_URL,
     tekkomBotApiToken: TEKKOM_BOT_API_TOKEN,
     tekkomBotBtgToken: TEKKOM_BOT_BTG_TOKEN,
-    heartbeatUrl: HEARTBEAT_URL,
+    heartbeat: {
+        url: HEARTBEAT_URL,
+        interval: 60000
+    },
     kubernetesServicePort: KUBERNETES_SERVICE_PORT,
     tekkomVervChannelId: DISCORD_TEKKOM_VERV_CHANNEL_ID,
 }
