@@ -17,6 +17,7 @@ export async function preloadListenActivityQueries() {
         getTopFiveSongsThisMonth,
         getTopFiveEpisodesThisMonth,
         getTopFiveSongsLastMonth,
+        getTopFiveEpisodesLastMonth,
         getTopFiveSongsThisYear,
         getTopFiveSongsLastYear,
         getMostActiveListenUsers,
@@ -44,6 +45,7 @@ export async function preloadListenActivityQueries() {
         loadSQL('getTopFiveSongsThisMonth.sql'),
         loadSQL('getTopFiveEpisodesThisMonth.sql'),
         loadSQL('getTopFiveSongsLastMonth.sql'),
+        loadSQL('getTopFiveEpisodesLastMonth.sql'),
         loadSQL('getTopFiveSongsThisYear.sql'),
         loadSQL('getTopFiveSongsLastYear.sql'),
         loadSQL('getMostActiveListenUsers.sql'),
@@ -73,6 +75,7 @@ export async function preloadListenActivityQueries() {
         topFiveThisMonthResult,
         topFiveEpisodesThisMonthResult,
         topFiveLastMonthResult,
+        topFiveEpisodesLastMonthResult,
         topFiveThisYearResult,
         topFiveLastYearResult,
         mostActiveUsersResult,
@@ -100,6 +103,7 @@ export async function preloadListenActivityQueries() {
         run(getTopFiveSongsThisMonth),
         run(getTopFiveEpisodesThisMonth),
         run(getTopFiveSongsLastMonth),
+        run(getTopFiveEpisodesLastMonth),
         run(getTopFiveSongsThisYear),
         run(getTopFiveSongsLastYear),
         run(getMostActiveListenUsers),
@@ -128,6 +132,7 @@ export async function preloadListenActivityQueries() {
     const topFiveThisMonth = topFiveThisMonthResult.rows
     const topFiveEpisodesThisMonth = topFiveEpisodesThisMonthResult.rows
     const topFiveLastMonth = topFiveLastMonthResult.rows
+    const topFiveEpisodesLastMonth = topFiveEpisodesLastMonthResult.rows
     const topFiveThisYear = topFiveThisYearResult.rows
     const topFiveLastYear = topFiveLastYearResult.rows
     const mostActiveUsers = mostActiveUsersResult.rows
@@ -156,6 +161,7 @@ export async function preloadListenActivityQueries() {
         topFiveThisMonth,
         topFiveEpisodesThisMonth,
         topFiveLastMonth,
+        topFiveEpisodesLastMonth,
         topFiveThisYear,
         topFiveLastYear,
         mostActiveUsers,
