@@ -1,6 +1,6 @@
 {
   "name": "tekkom_bot_api",
-  "version": "2.16.0",
+  "version": "2.16.1",
   "main": "index.js",
   "scripts": {
     "dev": "tsx --watch src/index.ts",
@@ -12,22 +12,22 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@fastify/cors": "^11.1.0",
+    "@fastify/cors": "^11.2.0",
     "cron-parser": "^5.4.0",
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "fast-levenshtein": "^3.0.0",
-    "fastify": "^5.6.1",
-    "firebase-admin": "^13.5.0",
+    "fastify": "^5.6.2",
+    "firebase-admin": "^13.6.0",
     "node-cron": "^4.2.1",
     "pg": "^8.16.3",
-    "redis": "^5.8.2",
-    "tsx": "^4.20.5"
+    "redis": "^5.10.0",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/fast-levenshtein": "^0.0.4",
-    "@types/node": "^24.5.2",
-    "@types/pg": "^8.15.5",
-    "typescript": "^5.9.2"
+    "@types/node": "^25.0.3",
+    "@types/pg": "^8.16.0",
+    "typescript": "^5.9.3"
   },
   "imports": {
     "#utils/*": "./src/utils/*",
