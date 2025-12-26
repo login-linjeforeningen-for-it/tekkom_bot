@@ -1,5 +1,5 @@
 SELECT 
-    e.name AS episode,
+    e.name AS "name",
     ar.name AS show,
     e.skips,
     e.listens,
