@@ -123,16 +123,14 @@ export default async function postListen(
         } else {
             // checking wether it's a track or episode based on existing data
             // and populating artistId and albumId if possible
-            const query = await loadSQL('getSongById.sql')
-            const result = await run(query, [id])
+            const result = await run('SELECT * FROM songs WHERE id = $1;', [id])
             if (result && result.rows.length > 0) {
                 const row = result.rows[0]
                 artistId = row.artist_id || 'Unknown'
                 albumId = row.album_id || 'Unknown'
                 type = 'track'
             } else {
-                const episodeQuery = await loadSQL('getEpisodeById.sql')
-                const episodeResult = await run(episodeQuery, [id])
+                const episodeResult = await run('SELECT * FROM episodes WHERE id = $1;', [id])
                 if (episodeResult && episodeResult.rows.length > 0) {
                     const row = episodeResult.rows[0]
                     artistId = row.show || 'Unknown'

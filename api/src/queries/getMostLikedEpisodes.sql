@@ -1,4 +1,5 @@
-SELECT e.name AS episode,
+SELECT 
+    e.name AS episode,
     ar.name AS show,
     e.skips,
     e.listens,
@@ -9,7 +10,7 @@ SELECT e.name AS episode,
     ) AS like_ratio
 FROM episodes e
     JOIN artists ar ON e.show = ar.id
-WHERE e.listens >= 10
-    AND e.skips >= 5
+WHERE e.listens >= 5
+    AND e.skips >= 2
 ORDER BY like_ratio DESC
 LIMIT 5;
