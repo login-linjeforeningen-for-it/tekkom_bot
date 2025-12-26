@@ -10,7 +10,7 @@ WITH daily_counts AS (
     FROM listens l
     JOIN songs s ON l.song_id = s.id
     JOIN artists ar ON s.artist = ar.id
-    JOIN albums al ON s.artist = al.id
+    JOIN albums al ON s.album = al.id
     WHERE l."start" >= NOW() - INTERVAL '365 days'
       AND NOT l.skipped
     GROUP BY day, s.name, ar.name, al.name, s."image", s.id

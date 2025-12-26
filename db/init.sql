@@ -48,9 +48,6 @@ CREATE TABLE IF NOT EXISTS episodes (
 -- Listens
 CREATE TABLE IF NOT EXISTS listens (
     id SERIAL PRIMARY KEY,
-    -- Polymorphic reference: uses trigger to enforce FK constraint
-    -- song_id references songs(id) when type='track'
-    -- song_id references episodes(id) when type='episode'
     song_id TEXT NOT NULL,
     type TEXT NOT NULL CHECK (type IN ('track', 'episode')),
     user_id TEXT NOT NULL REFERENCES users(id),
