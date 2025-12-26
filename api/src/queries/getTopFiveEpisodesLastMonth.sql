@@ -7,7 +7,7 @@ SELECT
 FROM listens l
     JOIN episodes e ON l.song_id = e.id
     JOIN artists ar ON e.show = ar.id
-WHERE DATE_TRUNC('month', ga."start") = DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month')
+WHERE DATE_TRUNC('month', l."start") = DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month')
     AND NOT l.skipped
 GROUP BY e.name,
     ar.name,
