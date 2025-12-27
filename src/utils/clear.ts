@@ -85,7 +85,7 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
 
     const collector = reply.createMessageComponentCollector({
         componentType: ComponentType.Button,
-        time: 30_000,
+        time: 60_000,
     })
 
     collector.on('collect', async (btn) => {
@@ -160,7 +160,8 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
                         await deleteWithTimeout(msg)
                         oldDeleted++
                         await new Promise(r => setTimeout(r, 250))
-                    } catch {
+                    } catch (error) {
+                        console.log('TIMEOUTTTT', error)
                         // skips any that fail
                     }
                 }

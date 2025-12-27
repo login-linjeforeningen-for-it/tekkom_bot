@@ -64,6 +64,8 @@ client.on<Events.PresenceUpdate>(Events.PresenceUpdate, async (oldPresence: Pres
 
 client.login(token)
 
+client.rest.on('rateLimited', (info) => console.log(`Rate limit: ${info}`))
+
 process.on('unhandledRejection', async (error) => {
     if ((error as { message: string }).message === 'Interaction has already been acknowledged.') {
         console.log('Interaction has already been acknowledged.')
