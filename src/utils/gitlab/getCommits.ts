@@ -19,7 +19,7 @@ export default async function getCommits(id: number, branch = 'main'): Promise<C
         return data
     } catch (error) {
         if (!JSON.stringify(error).includes('Skipped')) {
-            console.log(error)
+            console.log(`Error while getting commits: ${error}`)
         }
 
         return []

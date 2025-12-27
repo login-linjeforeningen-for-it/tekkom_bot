@@ -24,8 +24,8 @@ export default async function updateApi(messages: Announcement[]) {
         }
 
         const data = await response.json()
-        console.log(data)
+        return data
     } catch (error) {
-        console.log(error)
+        console.log(`Error while updating Queenbee API: ${error}`)
     }
 }

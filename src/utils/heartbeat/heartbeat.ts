@@ -15,6 +15,6 @@ export default async function heartbeat() {
             return data
         }, config.heartbeat.interval)
     } catch (error) {
-        console.log(error)
+        console.log(`Error sending heartbeat: ${error}`)
     }
 }

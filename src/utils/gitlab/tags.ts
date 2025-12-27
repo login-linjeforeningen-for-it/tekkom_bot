@@ -19,7 +19,7 @@ export default async function getTags(id: number): Promise<Tag[]> {
         return data
     } catch (error) {
         if (!JSON.stringify(error).includes('Skipped')) {
-            console.log(error)
+            console.log(`Error while getting tags: ${error}`)
         }
 
         return []
@@ -51,14 +51,15 @@ export async function postTag(id: number, tag: string, ref?: string): Promise<Ta
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         if (!JSON.stringify(error).includes('Skipped')) {
-            console.log(error)
+            console.log(`Error posting tag: ${error}`)
             return 400
         }
 
         if (error.message.includes('already exists')) {
             return 409
         }
-        console.log(error)
+
+        console.log(`Error posting tag: ${error}`)
         return 404
     }
 }

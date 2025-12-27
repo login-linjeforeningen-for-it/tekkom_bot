@@ -31,7 +31,7 @@ export default async function discordIssue(title: string, description: string, f
 
         return response.status
     } catch (error) {
-        console.log(error)
+        console.log(`Error while creating Discord issue: ${error}`)
         throw error
     }
 }

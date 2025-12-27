@@ -66,7 +66,8 @@ client.login(token)
 
 process.on('unhandledRejection', async (error) => {
     if ((error as { message: string }).message === 'Interaction has already been acknowledged.') {
-        return console.log('Interaction has already been acknowledged.')
+        console.log('Interaction has already been acknowledged.')
+        return
     }
 
     console.log(`Unhandled Promise Rejection:\n${error}`)

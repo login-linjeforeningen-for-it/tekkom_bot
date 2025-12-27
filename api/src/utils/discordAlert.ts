@@ -34,6 +34,6 @@ export default async function discordAlert(description: string, type: 'get' | 'p
 
         return response.status
     } catch (error) {
-        console.log(error)
+        console.log(`Error while sending Discord alert: ${error}`)
     }
 }

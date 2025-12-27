@@ -22,7 +22,7 @@ export default async function getMessages() {
         const data = await response.json()
         return data
     } catch (error) {
-        console.log(error)
+        console.log(`Error while fetching messages from Queenbee: ${error}`)
         return []
     }
 }

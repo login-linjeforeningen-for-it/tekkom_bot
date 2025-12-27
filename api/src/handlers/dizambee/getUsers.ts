@@ -17,7 +17,7 @@ export default async function getUsers(_: FastifyRequest, res: FastifyReply) {
         const data = await response.json()
         res.send(data)
     } catch (error) {
-        console.log(error)
+        console.log(`Error while getting users: ${error}`)
         res.status(500).send(error)
     }
 }

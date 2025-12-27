@@ -21,7 +21,7 @@ export default async function postMerge(id: number) {
         return data
     } catch (error) {
         if (!JSON.stringify(error).includes('Skipped')) {
-            console.log(error)
+            console.log(`Error while posting merge: ${error}`)
         }
     }
 }

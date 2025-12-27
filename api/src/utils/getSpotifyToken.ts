@@ -18,7 +18,7 @@ export default async function getSpotifyToken() {
         const data = await response.json()
         return data.access_token
     } catch (error) {
-        console.log(error)
+        console.log(`Error while getting Spotify token: ${error}`)
         return null
     }
 }

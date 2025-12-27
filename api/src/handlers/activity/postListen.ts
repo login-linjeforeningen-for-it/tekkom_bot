@@ -31,47 +31,35 @@ export default async function postListen(
     }
 
     if (
-        !user ||
-    !name ||
-    !artist || // episodes does not find artist
-    !start ||
-    !end ||
-    !album ||
-    !image ||
-    !source ||
-    !avatar ||
-    !userId
+        !user || !name || !artist || !start || !end || !album || !image ||
+        !source || !avatar || !userId
     ) {
-        console.log(
-            `Missing those that are undefined:\n${JSON.stringify({
-                id,
-                user,
-                name,
-                artist,
-                start,
-                end,
-                album,
-                image,
-                source,
-                avatar,
-                userId,
-            })}`
-        )
+        console.log(`Missing those that are undefined:\n${JSON.stringify({
+            id,
+            user,
+            name,
+            artist,
+            start,
+            end,
+            album,
+            image,
+            source,
+            avatar,
+            userId
+        })}`)
         return res
             .status(400)
             .send({ error: 'Please provide a valid listen activity.' })
     }
 
     try {
-        console.log(
-            `Adding song: '${name}' by artist '${artist}' for user '${user}'.`
-        )
+        console.log(`Adding song: '${name}' by artist '${artist}' for user '${user}'.`)
 
         let artistId: string = 'Unknown'
         let albumId: string = 'Unknown'
         let type = 'Unknown'
 
-        let show: string | null = null // For episodes
+        let show: string | null = null
 
         const artistIdAndAlbumIdIsNotKnown = !(await artistIdAndAlbumIdIsKnownBySongId(id))
         const shouldQuerySpotify = artistIdAndAlbumIdIsNotKnown || Math.random() < 0.1
@@ -79,8 +67,6 @@ export default async function postListen(
         if (shouldQuerySpotify) {
             try {
                 const token = await getSpotifyToken()
-
-                // First, try to fetch as a track
                 let response = await fetch(`${config.SPOTIFY_API_TRACK_URL}/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 })
@@ -95,12 +81,10 @@ export default async function postListen(
                     }
                     type = 'track'
                 } else {
-                    // If that fails, try to fetch as an episode
                     response = await fetch(`${config.SPOTIFY_API_EPISODE_URL}/${id}`, {
                         headers: { Authorization: `Bearer ${token}` },
                     })
 
-                    // If that fails, not found on Spotify
                     if (!response.ok) {
                         throw new Error(
                             `Spotify Error, Status: ${response.status} ${await response.text()}`
@@ -110,19 +94,18 @@ export default async function postListen(
                     if (data.show?.id) {
                         artistId = data.show.id
                     }
+
                     if (data.show?.name) {
                         show = data.show.name
                     }
+
                     type = 'episode'
                 }
 
             } catch (error) {
                 console.log('Spotify lookup failed:', error)
-                // Continue without failing the whole request; fallback IDs remain "Unknown"
             }
         } else {
-            // checking wether it's a track or episode based on existing data
-            // and populating artistId and albumId if possible
             const result = await run('SELECT * FROM songs WHERE id = $1;', [id])
             if (result && result.rows.length > 0) {
                 const row = result.rows[0]
@@ -151,13 +134,13 @@ export default async function postListen(
                     'UPDATE songs SET skips = COALESCE(skips, 0) + 1 WHERE id = $1',
                     [prevSongId]
                 )
-                type = 'track' // Assume track unless episode is confirmed
+                type = 'track'
                 if ((songUpdate.rowCount ?? 0) === 0) {
                     await run(
                         'UPDATE episodes SET skips = COALESCE(skips, 0) + 1 WHERE id = $1',
                         [prevSongId]
                     )
-                    type = 'episode' // Confirm episode if track update failed
+                    type = 'episode'
                 }
             }
         }
@@ -170,7 +153,6 @@ export default async function postListen(
         await run(userQuery, [userId, avatar, user])
 
         const artistQuery = await loadSQL('postArtist.sql')
-
         let insertedSongId = null
 
         if (type === 'track') {
@@ -191,8 +173,9 @@ export default async function postListen(
         await run(listenQuery, [userId, insertedSongId, type, start, end, source, skipped ?? false])
 
         return res.send({
-            // message: type === 'track' ? `Successfully added song ${name} by ${artistResult.rows[0].name}, played by ${user}` : `Successfully added episode ${name} from show ${artistResult.rows[0].name}, played by ${user}`,
-            message: type === 'track' ? `Successfully added song ${name} by ${artist}, played by ${user}` : `Successfully added episode ${name} from show ${artist}, played by ${user}`,
+            message: type === 'track'
+                ? `Successfully added song ${name} by ${artist}, played by ${user}`
+                : `Successfully added episode ${name} from show ${artist}, played by ${user}`,
         })
     } catch (error) {
         console.log(`Database error: ${JSON.stringify(error)}`)

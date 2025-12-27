@@ -45,7 +45,7 @@ export default async function sendGame({
         const data = await response.json()
         return data
     } catch (error) {
-        console.log(error)
+        console.log(`Error while sending game: ${error}`)
         return { error, humanReadable: `Failed to add game ${name} for ${user}.` }
     }
 }

@@ -36,7 +36,7 @@ export default async function requestWithRetries({query, retries = 10, delay = 1
             return data
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
-            console.log(error)
+            console.log(`Error getting requests with entries: ${error}`)
             if (error.response && error.response.status === 401) {
                 // Retry on authentication errors
                 retries--

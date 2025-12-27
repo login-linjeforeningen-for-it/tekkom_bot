@@ -20,7 +20,7 @@ export default async function postBtg(name: string, service: string, author: str
 
         return true
     } catch (error) {
-        console.log(error)
+        console.log(`Error while posting BTG: ${error}`)
         return false
     }
 }

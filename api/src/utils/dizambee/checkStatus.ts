@@ -18,7 +18,7 @@ export default async function checkStatus(ticketID: string) {
         // state_id 4 = closed
         return data.state_id === 4
     } catch (error) {
-        console.log(error)
+        console.log(`Error while checking status: ${error}`)
         return false
     }
 }

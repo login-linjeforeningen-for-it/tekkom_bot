@@ -24,7 +24,7 @@ export default async function handlePlays({ newPresence }: HandlePlayProps) {
         }
 
         const response = await sendGame(activity)
-        console.log(response.message)
+        console.log(`Handle plays response: ${response.message}`)
         return
     }
 }

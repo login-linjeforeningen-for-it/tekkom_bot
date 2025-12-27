@@ -76,7 +76,7 @@ export default async function reopenTicket(interaction: ChatInputCommandInteract
             flags: MessageFlags.Ephemeral
         })
     } catch (error) {
-        console.log(error)
+        console.log(`Error while reopening ticket: ${error}`)
         await interaction.reply({
             content: 'There was an error reopening the ticket. Please try again later.',
             flags: MessageFlags.Ephemeral

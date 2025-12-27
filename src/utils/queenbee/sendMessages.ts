@@ -27,7 +27,7 @@ export default async function sendMessages(client: Client, messages: Announcemen
             }
             sent.push(message)
         } catch (error) {
-            console.log(error)
+            console.log(`Error while sending messages: ${error}`)
         }
     }
 

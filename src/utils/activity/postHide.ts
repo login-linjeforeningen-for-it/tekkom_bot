@@ -21,7 +21,7 @@ export default async function postHide(user: string) {
         const data = await response.json()
         return data
     } catch (error) {
-        console.log(error)
+        console.log(`Error while hiding user ${user}: ${error}`)
         return `Failed to update user ${user}`
     }
 }

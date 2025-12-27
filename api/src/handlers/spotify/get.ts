@@ -17,10 +17,10 @@ export default async function getTrackPreview(req: FastifyRequest, res: FastifyR
         })
 
         const data = await response.json()
-        console.log(data)
+        console.log(`Track preview: ${data}`)
         res.send({ data })
     } catch (error) {
-        console.log(error)
+        console.log(`Error while getting track preview: ${error}`)
         return { url: null, error }
     }
 }

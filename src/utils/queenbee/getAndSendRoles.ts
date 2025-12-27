@@ -48,8 +48,8 @@ export default async function getAndSendRoles(client: Client): Promise<void> {
         }
 
         const result = await response.json() as { message: string }
-        console.log(result.message)
+        console.log(`Get and send roles response: ${result.message}`)
     } catch (error) {
-        console.log(error)
+        console.log(`Error while getting and sending roles: ${error}`)
     }
 }

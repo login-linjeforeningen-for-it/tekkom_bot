@@ -14,7 +14,7 @@ export default async function artistIdAndAlbumIdIsKnownBySongId(id: string): Pro
 
         return false
     } catch (error) {
-        console.log(error)
+        console.log(`Error while checking if artist id and album id is known by song id: ${error}`)
         return false
     }
 }

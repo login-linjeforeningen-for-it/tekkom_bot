@@ -124,7 +124,7 @@ export async function viewTicket(interaction: ButtonInteraction, view?: boolean)
             flags: MessageFlags.Ephemeral
         })
     } catch (error) {
-        console.log(error)
+        console.log(`Error while viewing ticket: ${error}`)
         await interaction.reply({
             content: 'There was an error viewing the ticket. Please try again later.',
             flags: MessageFlags.Ephemeral

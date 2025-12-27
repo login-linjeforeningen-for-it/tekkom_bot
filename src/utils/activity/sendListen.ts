@@ -47,7 +47,7 @@ export default async function sendListen({
         const data = await response.json()
         return data
     } catch (error) {
-        console.log(error)
+        console.log(`Error while sending listen: ${error}`)
         return { error, message: `Failed to add listen ${name} by ${artist} for ${user}.` }
     }
 }

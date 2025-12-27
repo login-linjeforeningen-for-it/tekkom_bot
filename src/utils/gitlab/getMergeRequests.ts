@@ -19,7 +19,7 @@ export default async function getOpenMergeRequests(projectId: number): Promise<M
         return data
     } catch (error) {
         if (!JSON.stringify(error).includes('Skipped')) {
-            console.log(error)
+            console.log(`Error while getting open merge requests: ${error}`)
         }
 
         return []

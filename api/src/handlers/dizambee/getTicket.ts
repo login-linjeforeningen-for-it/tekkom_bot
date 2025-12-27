@@ -19,7 +19,7 @@ export default async function getTicket(req: FastifyRequest, res: FastifyReply) 
         const data = await response.json()
         res.send(data)
     } catch (error) {
-        console.log(error)
+        console.log(`Error while getting ticket: ${error}`)
         res.status(500).send(error)
     }
 }
