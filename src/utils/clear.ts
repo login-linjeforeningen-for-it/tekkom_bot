@@ -11,6 +11,7 @@ import {
     TextChannel,
     ComponentType,
 } from 'discord.js'
+import deleteWithTimeout from './deleteWithoutTimeout.ts'
 
 export default async function clear(interaction: ChatInputCommandInteraction) {
     const isAllowed = (interaction.member?.roles as unknown as Roles)?.cache
@@ -156,7 +157,7 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
                     }
 
                     try {
-                        await msg.delete()
+                        await deleteWithTimeout(msg)
                         oldDeleted++
                         await new Promise(r => setTimeout(r, 250))
                     } catch {
