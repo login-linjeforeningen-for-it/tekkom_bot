@@ -133,6 +133,9 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
             let oldDeleted = 0
             let previousUpdate = 0
             let lastId: string | undefined
+            let timeout = 5
+            let previousTimeout = 5
+
             while (true) {
                 const batch = await channel.messages.fetch({ limit: 100, before: lastId })
                 if (batch.size === 0) {
@@ -147,7 +150,7 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
                         continue
                     }
 
-                    if (oldDeleted - previousUpdate >= 10) {
+                    if (oldDeleted - previousUpdate >= 5) {
                         previousUpdate = oldDeleted
                         await btn.editReply({
                             content: `Deleted ${recentDeleted} recent messages and ${oldDeleted} old messages. Still going...`,
@@ -159,9 +162,22 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
                     try {
                         await deleteWithTimeout(msg)
                         oldDeleted++
+                        timeout = 5
+                        previousTimeout = 0
+                        console.log('Successful delete')
                         await new Promise(r => setTimeout(r, 250))
-                    } catch (error) {
-                        console.log('TIMEOUTTTT', error)
+                    } catch {
+                        previousTimeout = timeout
+                        timeout = previousTimeout > 5 ? 120 : 10
+                        console.error(`Rate limited delete, timing out for ${timeout} seconds.`)
+
+                        await btn.editReply({
+                            content: `Deleted ${recentDeleted} recent messages and ${oldDeleted} old messages. Still going...\nWaiting ${timeout < 60000 ? `${timeout} seconds` : `${timeout / 60} minutes`} due to rate limit.`,
+                            embeds: [],
+                            components: [],
+                        })
+
+                        await new Promise(r => setTimeout(r, timeout * 1000))
                         // skips any that fail
                     }
                 }

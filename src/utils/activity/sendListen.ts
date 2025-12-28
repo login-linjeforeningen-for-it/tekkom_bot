@@ -48,6 +48,10 @@ export default async function sendListen({
         return data
     } catch (error) {
         console.log(`Error while sending listen: ${error}`)
+        if ((error as Error).message.toLowerCase().includes('getaddrinfo enotfound')) {
+            return { error: 'Timeout.', message: `Failed to add listen ${name} by ${artist} for ${user}.` }
+        }
+
         return { error, message: `Failed to add listen ${name} by ${artist} for ${user}.` }
     }
 }
