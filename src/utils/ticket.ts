@@ -1,6 +1,11 @@
 import config from '#config'
 
-// Fetches all articles (messages) for a specific Zammad ticket
+/**
+ * Fetches all articles (messages) for a specific Zammad ticket
+ * @param id ID of the ticket to fetch
+ * @param recipient Optional recipient parameter to find who the recipient is
+ * @returns Ticket (with recipient if requested)
+ */
 export default async function fetchTicket(id: number, recipient: boolean = false): Promise<ErrorClosed | ReducedMessage[] | string | Error> {
     try {
         const response = await fetch(`${config.api}/ticket/${id}/${recipient}`, {
