@@ -1,6 +1,6 @@
-import dotenv from 'dotenv'
+import { envLoad } from 'utilbee'
 
-dotenv.config()
+envLoad({ path: '.env' })
 
 const { WIKI_URL } = process.env
 

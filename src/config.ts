@@ -1,8 +1,6 @@
-// Purpose: Configures the environment variables and exports them as a single object.
-import dotenv from 'dotenv'
+import { envLoad } from 'utilbee'
 
-// Configures the environment variables
-dotenv.config()
+envLoad({ path: '.env' })
 
 // Destructures the environment variables
 const {

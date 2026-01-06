@@ -1,5 +1,4 @@
 import { TextChannel } from 'discord.js'
-import dotenv from 'dotenv'
 import updateStyretTemplate from '#utils/meetings/updateStyretTemplate.ts'
 import getQuery from '#utils/meetings/getQuery.ts'
 import requestWithRetries from '#utils/meetings/requestWithEntries.ts'
@@ -7,8 +6,9 @@ import getNextPathYearAndWeek from '#utils/meetings/getNextPathYearAndWeek.ts'
 import updateIndex from '#utils/meetings/updateIndexPage.ts'
 import createPage from '#utils/meetings/createPage.ts'
 import { STYRET_PAGE, TEKKOM_PAGE } from '#constants'
+import { envLoad } from 'utilbee'
 
-dotenv.config()
+envLoad({ path: '.env' })
 
 const {
     TEKKOM_MEETINGS_URL,

@@ -1,7 +1,9 @@
 import { STYRET_PAGE, TEKKOM_PAGE } from '#constants'
 import logStack from '#utils/meetings/logStack.ts'
 import requestWithRetries from '#utils/meetings/requestWithEntries.ts'
-import dotenv from 'dotenv'
+import { envLoad } from 'utilbee'
+
+envLoad({ path: '.env' })
 
 type ModifyPageProps = {
     existingHTML: string
@@ -27,8 +29,6 @@ type Path = {
     nextPath: string
     date: string
 }
-
-dotenv.config()
 
 const { TEKKOM_MEETINGS_URL, STYRET_MEETINGS_URL } = process.env
 

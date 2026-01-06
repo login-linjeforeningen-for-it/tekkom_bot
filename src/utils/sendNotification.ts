@@ -1,12 +1,11 @@
-import dotenv from 'dotenv'
 import { initializeApp } from 'firebase-admin/app'
 import type { ServiceAccount } from 'firebase-admin/app'
 import admin from 'firebase-admin'
 import type { Message } from 'firebase-admin/messaging'
 import { getMessaging } from 'firebase-admin/messaging'
+import { envLoad } from 'utilbee'
 
-// Configures the environment variables
-dotenv.config()
+envLoad({ path: '.env' })
 
 const {
     TYPE,

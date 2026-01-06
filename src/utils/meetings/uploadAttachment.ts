@@ -1,7 +1,7 @@
 import path from 'path'
-import dotenv from 'dotenv'
+import { envLoad } from 'utilbee'
 
-dotenv.config()
+envLoad({ path: '.env' })
 
 const { WIKIJS_TOKEN, WIKI_URL } = process.env
 

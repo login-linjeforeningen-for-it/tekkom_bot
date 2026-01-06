@@ -1,4 +1,3 @@
-import dotenv from 'dotenv'
 import { ticketIdPattern } from '#constants'
 import postMessage from '#utils/tickets/postMessage.ts'
 import fetchTicket from '#utils/ticket.ts'
@@ -12,8 +11,9 @@ import {
     Message,
     TextChannel
 } from 'discord.js'
+import { envLoad } from 'utilbee'
 
-dotenv.config()
+envLoad({ path: '.env' })
 
 const { DISCORD_GUILD_ID } = process.env
 

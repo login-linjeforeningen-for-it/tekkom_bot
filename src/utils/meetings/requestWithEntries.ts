@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import { envLoad } from 'utilbee'
 import logStack from '#utils/meetings/logStack.ts'
 
 type RequestWithRetriesProps = {
@@ -7,7 +7,7 @@ type RequestWithRetriesProps = {
     delay?: number
 }
 
-dotenv.config()
+envLoad({ path: '.env' })
 
 const { GRAPHQL_URL, WIKIJS_TOKEN } = process.env
 

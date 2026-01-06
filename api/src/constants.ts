@@ -1,9 +1,9 @@
-import dotenv from 'dotenv'
+import { envLoad } from 'utilbee'
 
 export const channels = [] as Channel[]
 export const roles = [] as Role[]
 
-dotenv.config({ path: '../.env' })
+envLoad({ path: ['.env', '../.env'] })
 
 const requiredEnvironmentVariables = [
     'AUTHENTIK_API_URL',
