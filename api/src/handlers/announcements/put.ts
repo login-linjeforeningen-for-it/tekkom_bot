@@ -41,7 +41,7 @@ export default async function putAnnouncements(req: FastifyRequest, res: Fastify
             `UPDATE announcements 
             SET title = $2, description = $3, channel = $4, roles = $5, embed = $6, color = $7, interval = $8, time = $9
             WHERE id = $1;`,
-            [id, title, description, channel, roles, embed || null, color || null, interval, time]
+            [id, title, description, channel, roles, typeof embed === 'boolean' ? embed : false, color || null, interval, time]
         )
 
         return res.send({ message: `Successfully updated announcement ${id}.` })
