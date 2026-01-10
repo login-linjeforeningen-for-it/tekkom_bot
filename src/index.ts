@@ -28,6 +28,10 @@ client.once(Events.ClientReady, async () => {
     autoSyncZammad(client)
     heartbeat()
     console.log('Ready!')
+
+    setInterval(async () => {
+        await checkAndHandleListenRepeats(client, lastListens)
+    }, 5000)
 })
 
 client.on<Events.InteractionCreate>(Events.InteractionCreate, async (interaction: Interaction<CacheType>) => {
@@ -82,9 +86,5 @@ process.on('uncaughtException', async (error) => {
 process.on('uncaughtExceptionMonitor', async (error) => {
     console.log(`Uncaught Promise Exception (Monitor):\n${error}`)
 })
-
-setInterval(async () => {
-    await checkAndHandleListenRepeats(client, lastListens)
-}, 5000)
 
 export default client
