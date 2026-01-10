@@ -6,8 +6,10 @@ export default function formatRows(rows: Announcement[]) {
     const week = getWeek()
     return rows.map((row) => ({
         ...row,
-        description: row.description
-            .replaceAll(/{week}/g, week.toString())
-            .replaceAll(/{year}/g, year.toString())
+        description: typeof row.description === 'string'
+            ? (row.description as string)
+                .replace(/{week}/g, week.toString())
+                .replace(/{year}/g, year.toString())
+            : row.description
     }))
 }

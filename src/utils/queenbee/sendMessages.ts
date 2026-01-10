@@ -13,17 +13,30 @@ export default async function sendMessages(client: Client, messages: Announcemen
         const textChannel = channel as TextChannel
         try {
             const roles = message.roles?.length > 0 ? message.roles.map((role) => `<@&${role}> `).join('') : ''
-            if (message.embed) {
-                const embed = new EmbedBuilder()
-                    .setTitle(message.title)
-                    .setDescription(message.description)
-                    .setColor(resolveColor(message.color))
+            const embeds = []
+            let messageContent = roles
 
-                await textChannel.send(roles.length > 0
-                    ? { content: roles, embeds: [embed] }
-                    : { embeds: [embed] })
-            } else {
-                await textChannel.send(`${roles}**${message.title}**\n${message.description}`)
+            for (let i = 0; i < message.title.length; i++) {
+                const title = message.title[i] ?? ''
+                const description = message.description[i] ?? ''
+
+                if (message.embed) {
+                    embeds.push(new EmbedBuilder()
+                        .setTitle(title)
+                        .setDescription(description)
+                        .setColor(resolveColor(message.color)))
+                } else {
+                    messageContent += `**${title}**\n${description}\n`
+                }
+            }
+
+            if (embeds.length > 0) {
+                await textChannel.send({
+                    content: messageContent.trim().length > 0 ? messageContent : undefined,
+                    embeds
+                })
+            } else if (messageContent.trim().length > 0) {
+                await textChannel.send(messageContent)
             }
             sent.push(message)
         } catch (error) {

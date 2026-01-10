@@ -4,8 +4,8 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 
 type PutAnnouncements = {
     id: number
-    title: string
-    description: string
+    title: string[]
+    description: string[]
     channel: string
     roles: string[]
     embed?: boolean

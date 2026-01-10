@@ -61,8 +61,8 @@ CREATE TABLE IF NOT EXISTS listens (
 -- Announcements
 CREATE TABLE IF NOT EXISTS announcements (
     id SERIAL PRIMARY KEY,
-    title TEXT NOT NULL,
-    description TEXT NOT NULL,
+    title TEXT[] NOT NULL,
+    description TEXT[] NOT NULL,
     channel TEXT NOT NULL,
     roles TEXT [],
     embed BOOLEAN,

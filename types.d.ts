@@ -571,8 +571,8 @@ type User = {
 
 type Announcement = {
     id: string
-    title: string
-    description: string
+    title: string[]
+    description: string[]
     channel: string
     roles: Role[]
     embed?: boolean
