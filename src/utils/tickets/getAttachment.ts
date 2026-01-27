@@ -2,7 +2,7 @@ import config from '#config'
 
 export default async function getAttachment(url: string) {
     try {
-        const response = await fetch(`${config.api}/attachment/${url}`)
+        const response = await fetch(`${config.api}/dizambee/attachment/${url}`)
 
         if (!response.ok) {
             throw new Error(await response.json())
