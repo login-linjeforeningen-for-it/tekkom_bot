@@ -23,7 +23,7 @@ export default async function postMessage(ticketID: number, message: Message, bo
                 }
             }
 
-            const url = `${config.api}/ticket/${ticketID}`
+            const url = `${config.api}/dizambee/ticket/${ticketID}`
             const data = {
                 'group_id': 37,
                 'customer_id': 5567,

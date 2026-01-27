@@ -156,7 +156,7 @@ export default async function handleCreateTicket(interaction: ButtonInteraction)
         const channelId = newChannel.id
         const guildId = interaction.guild?.id
 
-        const ticket = await fetch (`${config.api}/ticket`, {
+        const ticket = await fetch (`${config.api}/dizambee/ticket`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
