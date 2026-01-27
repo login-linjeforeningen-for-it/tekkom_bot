@@ -33,7 +33,8 @@ export default async function run(query: string, params?: SQLParamType) {
             } finally {
                 client.release()
             }
-        } catch {
+        } catch (error) {
+            console.error('Postgres connection failed:', error)
             console.log(`Pool currently unavailable, retrying in ${config.CACHE_TTL / 1000}s...`)
             await sleep(config.CACHE_TTL)
         }
