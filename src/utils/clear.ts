@@ -184,7 +184,7 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
             }
 
             return btn.editReply({
-                content: `Deleted **${recentDeleted} recent ${oldDeleted > 0 && `and ${oldDeleted}`} old messages**.`,
+                content: `Deleted **${recentDeleted} recent ${oldDeleted > 0 ? `and ${oldDeleted} old` : ''} messages**.`,
                 embeds: [],
                 components: [],
             })
