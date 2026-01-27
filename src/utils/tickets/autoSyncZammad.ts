@@ -24,6 +24,11 @@ export default async function autoSyncZammad(client: Client) {
 }
 
 async function sync(client: Client) {
+    console.log('SYNCING WITH ZAMMAD')
+    console.log('SYNCING WITH ZAMMAD')
+    console.log('SYNCING WITH ZAMMAD')
+    console.log('SYNCING WITH ZAMMAD')
+    console.log('SYNCING WITH ZAMMAD')
     const guild = await client.guilds.fetch(DISCORD_GUILD_ID as string) as Guild
     console.log('guild', guild)
     const ticketsCategory = guild.channels.cache.find(
