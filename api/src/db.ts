@@ -18,7 +18,7 @@ const pool = new Pool({
     database: DB || 'tekkom_bot',
     password: DB_PASSWORD,
     port: Number(DB_PORT) || 5432,
-    max: Number(DB_MAX_CONN) || 20,
+    max: Number(DB_MAX_CONN) || 50,
     idleTimeoutMillis: Number(DB_IDLE_TIMEOUT_MS) || 5000,
     connectionTimeoutMillis: Number(DB_TIMEOUT_MS) || 3000,
     keepAlive: true
