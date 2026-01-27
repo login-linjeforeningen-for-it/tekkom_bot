@@ -25,13 +25,13 @@ export default async function autoSyncZammad(client: Client) {
 
 async function sync(client: Client) {
     const guild = await client.guilds.fetch(DISCORD_GUILD_ID as string) as Guild
-
+    console.log('guild', guild)
     const ticketsCategory = guild.channels.cache.find(
         channel => channel.type ===
             ChannelType.GuildCategory
             && channel.name.toLowerCase() === 'tickets'
     )
-
+    console.log('ticketsCategory', ticketsCategory)
     if (!ticketsCategory) {
         console.log('Tickets category not found')
         return
@@ -43,7 +43,7 @@ async function sync(client: Client) {
         && !channel.name.includes('ticket')
         && ticketIdPattern.test(channel.name)
     )
-
+    console.log('ticketChannels', ticketChannels)
     for (const ch of ticketChannels) {
         const channel = ch[1] as TextChannel
         const messages = await channel.messages.fetch()
@@ -58,7 +58,7 @@ async function sync(client: Client) {
             })
         }))
         const zammadMessages = await fetchTicket(Number(channel.name)) as ReducedMessage[] | ErrorClosed | Error
-
+        console.log('zammadMessages', zammadMessages)
         // Checks if any are closed in Zammad, and if so closes them on Discord
         if ('error' in zammadMessages && zammadMessages.error === 'closed') {
             // Closes the Discord channel
@@ -69,8 +69,10 @@ async function sync(client: Client) {
         if (!Array.isArray(zammadMessages)) {
             return
         }
-        const { missingDiscord, missingZammad } = compare(discordMessages, zammadMessages as ReducedMessage[])
 
+        const { missingDiscord, missingZammad } = compare(discordMessages, zammadMessages as ReducedMessage[])
+        console.log('missingDiscord', missingDiscord)
+        console.log('missingZammad', missingZammad)
         if (missingDiscord.length) {
             // Posts the missing message to Discord
             for (const message of missingDiscord) {
