@@ -8,7 +8,6 @@ export default async function checkMaxConnections() {
         const maxRes = await run('SHOW max_connections;')
         const maxConnections = Number(maxRes.rows[0].max_connections)
         const THRESHOLD = Math.floor(maxConnections / 2)
-        const SEVERE_THRESHOLD = (maxConnections / 10) * 9
 
         if (active > THRESHOLD && config.WEBHOOK_URL) {
             console.warn(`Active connections ${active} > ${THRESHOLD}, sending Discord alert...`)
@@ -23,10 +22,6 @@ export default async function checkMaxConnections() {
                         timestamp: new Date().toISOString()
                     }
                 ]
-            }
-
-            if (active > SEVERE_THRESHOLD) {
-                data.content = `🚨 <@&${config.CRITICAL_ROLE}> 🚨`
             }
 
             await fetch(config.WEBHOOK_URL, {
