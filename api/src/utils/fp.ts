@@ -1,21 +1,60 @@
-import { preloadListenActivityQueries } from '#utils/listenActivityQueries.ts'
-import { preloadGameActivityQueries } from './gameActivityQueries.ts'
+import preloadGameActivityQueriesHot from './gameActivityQueriesHot.ts'
 import alertSlowQuery from '#utils/alertSlowQuery.ts'
 import config from '#constants'
 import fp from 'fastify-plugin'
+import preloadListenActivityQueriesHot from './listenActivityQueriesHot.ts'
+import preloadListenActivityQueriesCold from './listenActivityQueriesCold.ts'
+import preloadGameActivityQueriesCold from './gameActivityQueriesCold.ts'
 
 export default fp(async (fastify) => {
-    async function refreshQueries() {
+    fastify.gameHot = {}
+    fastify.gameCold = {}
+    fastify.listenHot = {}
+    fastify.listenCold = {}
+
+    async function refreshHot() {
         const start = Date.now()
-        const newListenData = await preloadListenActivityQueries()
-        const newGameData = await preloadGameActivityQueries()
-        const duration = (Date.now() - start) / 1000
-        alertSlowQuery(duration, 'cache')
-        fastify.cachedListenJSON = Buffer.from(JSON.stringify(newListenData))
-        fastify.cachedGameJSON = Buffer.from(JSON.stringify(newGameData))
-        fastify.log.info('Activity queries refreshed')
+
+        fastify.gameHot = await preloadGameActivityQueriesHot()
+        fastify.listenHot = await preloadListenActivityQueriesHot()
+
+        alertSlowQuery((Date.now() - start) / 1000, 'cache hot')
+        fastify.log.debug('Hot activity queries refreshed')
     }
 
-    refreshQueries()
-    setInterval(refreshQueries, config.CACHE_TTL)
+    async function refreshCold() {
+        const start = Date.now()
+
+        fastify.gameCold = await preloadGameActivityQueriesCold()
+        fastify.listenCold = await preloadListenActivityQueriesCold()
+
+        alertSlowQuery((Date.now() - start) / 1000, 'cache-cold')
+        fastify.log.info('Cold activity queries refreshed')
+    }
+
+    function rebuildBuffers() {
+        fastify.cachedGameJSON = Buffer.from(
+            JSON.stringify({ ...fastify.gameCold, ...fastify.gameHot })
+        )
+
+        fastify.cachedListenJSON = Buffer.from(
+            JSON.stringify({ ...fastify.listenCold, ...fastify.listenHot })
+        )
+    }
+
+    async function refreshHotAndRebuild() {
+        await refreshHot()
+        rebuildBuffers()
+    }
+
+    async function refreshColdAndRebuild() {
+        await refreshCold()
+        rebuildBuffers()
+    }
+
+    await refreshColdAndRebuild()
+    await refreshHotAndRebuild()
+
+    setInterval(refreshHotAndRebuild, config.CACHE_TTL_HOT)
+    setInterval(refreshColdAndRebuild, config.CACHE_TTL_COLD)
 })

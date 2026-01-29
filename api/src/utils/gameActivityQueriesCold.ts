@@ -1,10 +1,9 @@
 import run from '#db'
 import { loadSQL } from '#utils/loadSQL.ts'
 
-export async function preloadGameActivityQueries() {
+export default async function preloadGameActivityQueriesCold() {
     const [
         getStatistics,
-        getCurrentlyPlaying,
         getMostPlayedGames,
         getGamesPlayedPerDay,
         getTopFiveToday,
@@ -21,7 +20,6 @@ export async function preloadGameActivityQueries() {
         getMostSkippedGames
     ] = await Promise.all([
         loadSQL('getGameStatistics.sql'),
-        loadSQL('getCurrentlyPlaying.sql'),
         loadSQL('getMostPlayedGames.sql'),
         loadSQL('getGamesPlayedPerDay.sql'),
         loadSQL('getTopFiveGamesToday.sql'),
@@ -40,7 +38,6 @@ export async function preloadGameActivityQueries() {
 
     const [
         statsResult,
-        currentlyPlayingResult,
         mostPlayedGamesResult,
         mostPlayedGamesPerDayResult,
         topFiveTodayResult,
@@ -57,7 +54,6 @@ export async function preloadGameActivityQueries() {
         mostSkippedGamesResult
     ] = await Promise.all([
         run(getStatistics),
-        run(getCurrentlyPlaying),
         run(getMostPlayedGames),
         run(getGamesPlayedPerDay),
         run(getTopFiveToday),
@@ -75,7 +71,6 @@ export async function preloadGameActivityQueries() {
     ])
 
     const stats = statsResult.rows[0]
-    const currentlyPlaying = currentlyPlayingResult.rows
     const mostPlayedGames = mostPlayedGamesResult.rows
     const mostPlayedGamesPerDay = mostPlayedGamesPerDayResult.rows
     const topFiveToday = topFiveTodayResult.rows
@@ -93,7 +88,6 @@ export async function preloadGameActivityQueries() {
 
     return {
         stats,
-        currentlyPlaying,
         mostPlayedGames,
         mostPlayedGamesPerDay,
         topFiveToday,
