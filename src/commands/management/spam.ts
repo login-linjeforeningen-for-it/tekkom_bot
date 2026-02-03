@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, ChannelType, TextChannel } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, ChannelType } from 'discord.js'
 import type { Roles } from '#interfaces'
 import config from '#config'
 import { Role } from 'discord.js'
@@ -9,7 +9,7 @@ export const data = new SlashCommandBuilder()
     .addChannelOption(option => option
         .setName('channel')
         .setDescription('Channel to send the message in')
-        .addChannelTypes(ChannelType.GuildText)
+        .addChannelTypes(ChannelType.GuildText, ChannelType.PublicThread, ChannelType.PrivateThread)
         .setRequired(true)
     )
     .addUserOption(option => option
@@ -50,11 +50,18 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         return await interaction.reply({ content: 'Unauthorized.', ephemeral: true })
     }
 
-    if (!channel || channel.type !== ChannelType.GuildText) {
-        return interaction.reply({ content: 'I can only spam in text channels.', ephemeral: true })
+    const permittedTypes = [
+        ChannelType.GuildText,
+        ChannelType.PublicThread,
+        ChannelType.PrivateThread,
+    ]
+
+    if (!channel || !permittedTypes.includes(channel.type)) {
+        return interaction.reply({ content: 'I can only spam in text channels or threads.', ephemeral: true })
     }
 
-    const textChannel = channel as TextChannel
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const textChannel = channel as any
 
     await interaction.reply({ content: `Starting to spam ${user} with your message every ${interval} seconds, ${count} times.`, ephemeral: true })
 
