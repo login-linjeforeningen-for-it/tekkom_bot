@@ -4,6 +4,7 @@ envLoad({ path: '.env' })
 
 // Destructures the environment variables
 const {
+    RUNNING_ID,
     DISCORD_CLIENT_ID,
     DISCORD_GUILD_ID,
     DISCORD_STYRET_ROLE_ID,
@@ -29,7 +30,8 @@ const {
 
 // Throws an error if any of the essential environment variables are missing
 if (
-    !DISCORD_CLIENT_ID
+    ! RUNNING_ID
+    || !DISCORD_CLIENT_ID
     || !DISCORD_GUILD_ID
     || !DISCORD_STYRET_ROLE_ID
     || !DISCORD_TEKKOM_ROLE_ID
@@ -54,6 +56,7 @@ if (
 
 // Exports the environment variables as a single object
 const config = {
+    runningId: RUNNING_ID,
     clientId: DISCORD_CLIENT_ID,
     guildId: DISCORD_GUILD_ID,
     styret: DISCORD_STYRET_ROLE_ID,
