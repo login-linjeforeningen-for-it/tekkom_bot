@@ -36,10 +36,10 @@ export const data = new SlashCommandBuilder()
     .addNumberOption(option =>
         option
             .setName('count')
-            .setDescription('Number of messages to send (max 100)')
+            .setDescription('Number of messages to send (max 1000)')
             .setRequired(false)
             .setMinValue(1)
-            .setMaxValue(100)
+            .setMaxValue(1000)
     )
 
 export async function execute(interaction: ChatInputCommandInteraction) {
