@@ -35,8 +35,8 @@ export default async function run(query: string, params?: SQLParamType) {
             }
         } catch (error) {
             console.error('Postgres connection failed:', error)
-            console.log(`Pool currently unavailable, retrying in ${config.CACHE_TTL / 1000}s...`)
-            await sleep(config.CACHE_TTL)
+            console.log(`Pool currently unavailable, retrying in ${config.CACHE_TTL_HOT / 1000}s...`)
+            await sleep(config.CACHE_TTL_HOT)
         }
     }
 }
