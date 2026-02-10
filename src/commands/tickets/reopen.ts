@@ -3,7 +3,7 @@ import reopenTicket from '#utils/tickets/reopen.ts'
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js'
 
 export const data = new SlashCommandBuilder()
-    .setName('reopen_temp')
+    .setName('reopen')
     .setDescription('Reopens a ticket.')
     .addStringOption(option =>
         option.setName('ticket')
