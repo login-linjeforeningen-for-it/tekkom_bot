@@ -155,7 +155,25 @@ export default async function postListen(
         const artistQuery = await loadSQL('postArtist.sql')
         let insertedSongId = null
 
+        const currentlyListeningQuery = await loadSQL('getCurrentlyListening.sql')
+
+
         if (type === 'track') {
+            // Check if somebody else is listening to the song
+            const currentlyListens = (await run(currentlyListeningQuery)).rows
+            try {
+                for (const listen of currentlyListens) {
+                    if (listen.song_id === id && listen.user_id !== userId) {
+                        console.log(`${user} is now listening to the same song as ${listen.user_id}`)
+                        const postSongInspiredQuery = await loadSQL('postSongInspired.sql')
+                        const postSongInspired = await run(postSongInspiredQuery, [id])
+                        console.log(`Incremented ${name} inspired field`)
+                    }
+                }
+            } catch (error) {
+                console.log(`Error with currently listens: ${JSON.stringify(error)}`)
+            }
+
             await run(artistQuery, [artistId || 'Unknown', artist])
             const albumQuery = await loadSQL('postAlbum.sql')
             await run(albumQuery, [albumId || 'Unknown', album])
