@@ -52,8 +52,9 @@ export default fp(async (fastify) => {
         rebuildBuffers()
     }
 
-    await refreshColdAndRebuild()
-    await refreshHotAndRebuild()
+    refreshColdAndRebuild()
+        .then(() => refreshHotAndRebuild())
+        .catch((err) => fastify.log.error({ err }, 'Initial cache population failed, will retry on next interval'))
 
     setInterval(refreshHotAndRebuild, config.CACHE_TTL_HOT)
     setInterval(refreshColdAndRebuild, config.CACHE_TTL_COLD)
