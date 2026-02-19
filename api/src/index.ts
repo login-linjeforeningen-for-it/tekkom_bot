@@ -23,7 +23,7 @@ fastify.register(cors, {
 
 const port = Number(process.env.PORT) || 8080
 
-fastify.register(fp)
+fastify.register(fp, { timeout: 30000 })
 fastify.register(apiRoutes, { prefix: '/api' })
 fastify.get('/', getIndex)
 fastify.get('/favicon.ico', getFavicon)
