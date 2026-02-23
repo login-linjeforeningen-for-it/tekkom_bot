@@ -1,7 +1,19 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, ChannelType } from 'discord.js'
+import { SlashCommandBuilder, ChatInputCommandInteraction, ChannelType, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js'
 import type { Roles } from '#interfaces'
 import config from '#config'
 import { Role } from 'discord.js'
+
+const activeSpamJobs = new Map<string, { cancelled: boolean, resolve?: () => void }>()
+
+function cancellableSleep(ms: number, job: { cancelled: boolean, resolve?: () => void }): Promise<void> {
+    return new Promise(resolve => {
+        const timer = setTimeout(resolve, ms)
+        job.resolve = () => {
+            clearTimeout(timer)
+            resolve()
+        }
+    })
+}
 
 export const data = new SlashCommandBuilder()
     .setName('spam')
@@ -63,14 +75,51 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const textChannel = channel as any
 
-    await interaction.reply({ content: `Starting to spam ${user} with your message every ${interval} seconds, ${count} times.`, ephemeral: true })
+    const job: { cancelled: boolean, resolve?: () => void } = { cancelled: false }
+    activeSpamJobs.set(interaction.id, job)
 
+    const cancelButton = new ButtonBuilder()
+        .setCustomId('cancel_spam')
+        .setLabel('Cancel')
+        .setStyle(ButtonStyle.Danger)
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(cancelButton)
+
+    await interaction.reply({
+        content: `Starting to spam ${user} with your message every ${interval} seconds, ${count} times.`,
+        ephemeral: true,
+        components: [row],
+    })
+
+    const collector = interaction.channel?.createMessageComponentCollector({
+        filter: i => i.customId === 'cancel_spam' && i.user.id === interaction.user.id,
+        max: 1,
+    })
+    collector?.on('collect', async i => {
+        job.cancelled = true
+        job.resolve?.()
+        await i.reply({ content: 'Spam cancelled.', ephemeral: true })
+    })
+
+    let sent = 0
     for (let i = 0; i < count; i++) {
+        if (job.cancelled) break
         await textChannel.send(`${user}: ${message}`)
-        if (i < count - 1) {
-            await new Promise(resolve => setTimeout(resolve, interval * 1000))
+        sent++
+        if (i < count - 1 && !job.cancelled) {
+            await cancellableSleep(interval * 1000, job)
         }
     }
 
-    await interaction.followUp({ content: `Finished spamming ${user}.`, ephemeral: true })
+    collector?.stop()
+    activeSpamJobs.delete(interaction.id)
+
+    const disabledButton = ButtonBuilder.from(cancelButton).setDisabled(true)
+    const disabledRow = new ActionRowBuilder<ButtonBuilder>().addComponents(disabledButton)
+
+    await interaction.editReply({
+        content: job.cancelled
+            ? `Spam cancelled after ${sent} message(s).`
+            : `Finished spamming ${user} (${sent} message(s) sent).`,
+        components: [disabledRow],
+    })
 }
