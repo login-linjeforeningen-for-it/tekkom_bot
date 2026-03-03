@@ -167,7 +167,7 @@ export default async function postListen(
                         console.log(`${user} is now listening to the same song as ${listen.user_id}`)
                         const postSongInspiredQuery = await loadSQL('postSongInspired.sql')
                         await run(postSongInspiredQuery, [id])
-                        console.log(`Incremented ${name} inspired field`)
+                        console.log(`Incremented ${name} (ID: ${listen.song_id}) inspired field`)
                     }
                 }
             } catch (error) {
