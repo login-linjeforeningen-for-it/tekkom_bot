@@ -157,7 +157,6 @@ export default async function postListen(
 
         const currentlyListeningQuery = await loadSQL('getCurrentlyListening.sql')
 
-
         if (type === 'track') {
             // Check if somebody else is listening to the song
             const currentlyListens = (await run(currentlyListeningQuery)).rows
