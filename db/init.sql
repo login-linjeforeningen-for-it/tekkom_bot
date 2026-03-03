@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS songs (
     "image" TEXT NOT NULL,
     listens INT DEFAULT 1,
     skips INT DEFAULT 0,
+    inspired INT DEFAULT 0 NOT NULL,
     timestamp TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -42,6 +43,7 @@ CREATE TABLE IF NOT EXISTS episodes (
     "image" TEXT NOT NULL,
     listens INT DEFAULT 1,
     skips INT DEFAULT 0,
+    inspired INT DEFAULT 0 NOT NULL,
     timestamp TIMESTAMPTZ DEFAULT NOW()
 );
 
