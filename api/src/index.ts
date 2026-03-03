@@ -15,7 +15,6 @@ const fastify = Fastify({
 
 fastify.decorate('cachedListenJSON', Buffer.from(''))
 fastify.decorate('cachedGameJSON', Buffer.from(''))
-fastify.decorate('cachedCurrentlyListening', Buffer.from(''))
 fastify.decorate('favicon', fs.readFileSync(path.join(process.cwd(), 'public', 'favicon.ico')))
 fastify.register(cors, {
     origin: true,

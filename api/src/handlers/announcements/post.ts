@@ -14,12 +14,24 @@ export default async function postAnnouncements(req: FastifyRequest, res: Fastif
     }
 
     try {
-        console.log(`Adding announcement with title '${title}', description '${description}', channel '${channel}', roles '${roles}', embed '${embed}', color '${color}', interval '${interval}' and time '${time}'.`)
+        console.log(`Adding announcement with title '${title}', description 
+            '${description}', channel '${channel}', roles '${roles}', 
+            embed '${embed}', color '${color}', interval '${interval}' and 
+            time '${time}'.`)
 
         await run(
             `INSERT INTO announcements (title, description, channel, roles, embed, color, interval, time) 
              SELECT $1, $2, $3, $4, $5, $6, $7, $8;`,
-            [title, description, channel, roles || null, typeof embed === 'boolean' ? embed : false, color || null, interval || null, time || null]
+            [
+                title,
+                description,
+                channel,
+                roles || null,
+                typeof embed === 'boolean' ? embed : false,
+                color || null,
+                interval || null,
+                time || null
+            ]
         )
 
         return res.send({ message: `Successfully added announcement ${title[0]}${interval ? ` with interval ${interval}` : ''}.` })

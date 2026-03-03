@@ -1,6 +1,13 @@
 import constants from '#constants'
 
-export default async function getIssueInfo(itemNodeId: string): Promise<{ issueTitle: string; repoName: string; projectName: string; color: string }> {
+export default async function getIssueInfo(
+    itemNodeId: string
+): Promise<{
+    issueTitle: string;
+    repoName: string;
+    projectName: string;
+    color: string
+}> {
     const query = `
         query($nodeId: ID!) {
             node(id: $nodeId) {

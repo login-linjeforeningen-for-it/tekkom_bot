@@ -5,7 +5,7 @@ export function humanToSchedule(
     day: string = '1',
     week: string = '0'
 ) {
-    let output = ''
+    let output
 
     if (isValidCronExpr(interval)) {
         return interval
@@ -46,7 +46,7 @@ export function scheduleToHuman(interval: string) {
     if (parts.length !== 5 && parts.length !== 6) throw new Error('Invalid cron expression')
 
     const [minute, hour, day, month, week] = parts
-    let output = ''
+    let output
 
     switch (true) {
         case interval === '* * * * *':
@@ -76,6 +76,18 @@ export function scheduleToHuman(interval: string) {
 }
 
 function isValidCronExpr(expr: string): boolean {
-    const cronRegex = /^(\*|([0-5]?\d))( (\*|([01]?\d|2[0-3])))( (\*|([01]?\d|2[0-3])))( (\*|([1-9]|[12]\d|3[01])))( (\*|[0-6]))( (\/(\d+)))?$/
+    const cronRegex = new RegExp(
+        String.raw`
+^
+(\*|([0-5]?\d))
+( (\*|([01]?\d|2[0-3])))
+( (\*|([01]?\d|2[0-3])))
+( (\*|([1-9]|[12]\d|3[01])))
+( (\*|[0-6]))
+( (\/(\d+)))?
+$
+        `.replace(/\s+/g, '')
+    )
+
     return cronRegex.test(expr)
 }

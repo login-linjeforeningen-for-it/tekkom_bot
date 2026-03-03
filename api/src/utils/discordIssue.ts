@@ -53,6 +53,6 @@ function getColor(name: string) {
         case 'purple':
             return 0xab7df8
         default:
-            return 0x9198a1 // gray
+            return 0x9198a1
     }
 }

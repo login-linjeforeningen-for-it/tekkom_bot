@@ -18,10 +18,14 @@ export default async function checkAndAlert(name: string, service: string, middl
     }
 
     if (!ping) {
-        return await discordAlert(`Detected BTG login towards ${service} from user ${name} allowed by <@${author}>. Please verify that there are currently known issues with Authentik and that this is expected.`)
+        return await discordAlert(`Detected BTG login towards ${service} from 
+            user ${name} allowed by <@${author}>. Please verify that there are 
+            currently known issues with Authentik and that this is expected.`)
     }
 
     if (!middleware) {
-        await discordAlert(`Detected BTG login towards ${service} from user ${name}. Please verify that there are currently known issues with Authentik and that this is expected.`, '', true)
+        await discordAlert(`Detected BTG login towards ${service} from user 
+            ${name}. Please verify that there are currently known issues with 
+            Authentik and that this is expected.`, '', true)
     }
 }

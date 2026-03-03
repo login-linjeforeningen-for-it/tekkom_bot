@@ -26,7 +26,8 @@ export default async function putAnnouncements(req: FastifyRequest, res: Fastify
     }
 
     if (!interval && !time) {
-        return res.status(400).send({ error: 'You cannot edit an already sent announcement without also giving it a schedule to be resent.' })
+        return res.status(400).send({ error: `You cannot edit an already sent 
+            announcement without also giving it a schedule to be resent.` })
     }
 
     const exists = await run('SELECT * FROM announcements WHERE id = $1', [id])
@@ -35,7 +36,10 @@ export default async function putAnnouncements(req: FastifyRequest, res: Fastify
     }
 
     try {
-        console.log(`Updating announcement ${id} with title '${title}', description '${description}', channel '${channel}', roles '${roles}', embed '${embed}', color '${color}', interval '${interval}' and time '${time}'.`)
+        console.log(`Updating announcement ${id} with title '${title}', 
+            description '${description}', channel '${channel}', roles '${roles}'
+            , embed '${embed}', color '${color}', interval '${interval}' and 
+            time '${time}'.`)
 
         await run(
             `UPDATE announcements 
