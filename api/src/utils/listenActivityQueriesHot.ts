@@ -2,9 +2,17 @@ import run from '#db'
 import { loadSQL } from '#utils/loadSQL.ts'
 
 export default async function preloadListenActivityQueriesHot() {
-    const [getCurrentlyListening] = await Promise.all([loadSQL('getCurrentlyListening.sql')])
-    const [currentlyListeningResult] = await Promise.all([run(getCurrentlyListening)])
-    const currentlyListening = currentlyListeningResult.rows
+    const [getCurrentlyListening, getCurrentlyInspiredSongs] = await Promise.all([
+        loadSQL('getCurrentlyListening.sql'),
+        loadSQL('getCurrentlyInspiredSongs.sql')
+    ])
 
-    return { currentlyListening }
+    const [
+        currentlyListeningResult,
+        currentlyInspiredResult
+    ] = await Promise.all([run(getCurrentlyListening), run(getCurrentlyInspiredSongs)])
+    const currentlyListening = currentlyListeningResult.rows
+    const currentlyInspired = currentlyInspiredResult.rows
+
+    return { currentlyListening, currentlyInspired }
 }

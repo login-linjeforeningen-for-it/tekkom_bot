@@ -28,7 +28,9 @@ export default async function preloadListenActivityQueriesCold() {
         getMostSkippedAlbums,
         getMostSkippedArtists,
         getMostSkippedSongs,
-        getMostSkippedEpisodes
+        getMostSkippedEpisodes,
+        getMostInspiredEpisodes,
+        getMostInspiredSongs
     ] = await Promise.all([
         loadSQL('getStatistics.sql'),
         loadSQL('getMostPlayedAlbums.sql'),
@@ -55,7 +57,9 @@ export default async function preloadListenActivityQueriesCold() {
         loadSQL('getMostSkippedAlbums.sql'),
         loadSQL('getMostSkippedArtists.sql'),
         loadSQL('getMostSkippedSongs.sql'),
-        loadSQL('getMostSkippedEpisodes.sql')
+        loadSQL('getMostSkippedEpisodes.sql'),
+        loadSQL('getMostInspiredEpisodes.sql'),
+        loadSQL('getMostInspiredSongs.sql')
     ])
 
     const [
@@ -85,6 +89,8 @@ export default async function preloadListenActivityQueriesCold() {
         mostSkippedArtistsResult,
         mostSkippedSongsResult,
         mostSkippedEpisodesResult,
+        mostInspiredEpisodesResult,
+        mostInspiredSongsResult
     ] = await Promise.all([
         run(getStatistics),
         run(getMostPlayedAlbums),
@@ -111,7 +117,9 @@ export default async function preloadListenActivityQueriesCold() {
         run(getMostSkippedAlbums),
         run(getMostSkippedArtists),
         run(getMostSkippedSongs),
-        run(getMostSkippedEpisodes)
+        run(getMostSkippedEpisodes),
+        run(getMostInspiredEpisodes),
+        run(getMostInspiredSongs)
     ])
 
     const stats = statsResult.rows[0]
@@ -140,6 +148,8 @@ export default async function preloadListenActivityQueriesCold() {
     const mostSkippedArtists = mostSkippedArtistsResult.rows
     const mostSkippedSongs = mostSkippedSongsResult.rows
     const mostSkippedEpisodes = mostSkippedEpisodesResult.rows
+    const mostInspiredEpisodes = mostInspiredEpisodesResult.rows
+    const mostInspiredSongs = mostInspiredSongsResult.rows
 
     return {
         stats,
@@ -167,6 +177,8 @@ export default async function preloadListenActivityQueriesCold() {
         mostSkippedAlbums,
         mostSkippedArtists,
         mostSkippedSongs,
-        mostSkippedEpisodes
+        mostSkippedEpisodes,
+        mostInspiredEpisodes,
+        mostInspiredSongs
     }
 }
