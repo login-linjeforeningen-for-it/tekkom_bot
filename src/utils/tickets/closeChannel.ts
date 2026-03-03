@@ -16,7 +16,10 @@ export default async function closeChannel({ guild, interaction, currentChannel 
 
     if (!archive) {
         if (!interaction) {
-            return await currentChannel.send('This ticket has been closed in Zammad, but cannot be closed in Discord since the "archived-tickets" category cannot be found.')
+            return await currentChannel.send(
+                'This ticket has been closed in Zammad, but cannot be closed in Discord ' +
+                'since the "archived-tickets" category cannot be found.'
+            )
         }
 
         return await interaction.reply({

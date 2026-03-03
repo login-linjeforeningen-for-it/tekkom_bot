@@ -3,22 +3,65 @@ import { ThreadChannel } from 'discord.js'
 export default async function templates(thread: ThreadChannel) {
     // Template for '#pr-kontakt'
     if (thread.parent?.name === 'pr-kontakt') {
-        return await thread.send({
-            content: '## Frist for å be om promotering er 2 uker!\nVed å ikke følge denne regelen vil ikke arrangementet ditt bli promotert\n**På både norsk og engelsk:**\n```\nTittel: Thread tittel skal være arrangement / grunn for kontakt\nSted (Hvor skjer det?):\nDato og klokkeslett (Når skjer det?):\nBeskrivelse/promotekst (Hva er det?):\nVi vil etterspørre en bedre promoteringstekst ved tydelig latskap.\nRelease dato (Når er det ønsket at promo postes?):\nFrist for påmelding:\nPåmeldingslenke:\nKapasitet:\nHvordan du ønsker at det skal promoteres:\nVed å ikke følge malen, så vil ikke arrangementet bli promotert:\n```'
-        })
+        const lines = [
+            '## Frist for å be om promotering er 2 uker!',
+            'Ved å ikke følge denne regelen vil ikke arrangementet ditt bli promotert',
+            '**På både norsk og engelsk:**',
+            '```',
+            'Tittel: Thread tittel skal være arrangement / grunn for kontakt',
+            'Sted (Hvor skjer det?):',
+            'Dato og klokkeslett (Når skjer det?):',
+            'Beskrivelse/promotekst (Hva er det?):',
+            'Vi vil etterspørre en bedre promoteringstekst ved tydelig latskap.',
+            'Release dato (Når er det ønsket at promo postes?):',
+            'Frist for påmelding:',
+            'Påmeldingslenke:',
+            'Kapasitet:',
+            'Hvordan du ønsker at det skal promoteres:',
+            'Ved å ikke følge malen, så vil ikke arrangementet bli promotert:',
+            '```',
+        ]
+        const content = lines.join('\n')
+        return await thread.send({ content })
     }
 
     // Template for '#saker-til-styremøter'
     if (thread.parent?.name === 'saker-til-styremøter') {
-        return await thread.send({
-            content: 'Husk å ha med:\n```\nType sak: O / D / V - \nBeskrivelse av saken.\n\nEksempel:\nD - Nytt format av saker\nDenne linjen og resten av meldingen er innholdet i saken.```\nDersom du ønsker å redigere en sak må du redigere samme melding. Flere meldinger for samme sak vil ikke komme med. Meldinger uten type vil heller ikke komme med. Slike meldinger antas å være urelevant diskusjon.\n'
-        })
+        const content = [
+            'Husk å ha med:',
+            '```',
+            'Type sak: O / D / V - ',
+            'Beskrivelse av saken.',
+            '',
+            'Eksempel:',
+            'D - Nytt format av saker',
+            'Denne linjen og resten av meldingen er innholdet i saken.',
+            '```',
+            'Dersom du ønsker å redigere en sak må du redigere samme melding. ' +
+            'Flere meldinger for samme sak vil ikke komme med. ' +
+            'Meldinger uten type vil heller ikke komme med. ' +
+            'Slike meldinger antas å være urelevant diskusjon.',
+        ].join('\n')
+        return await thread.send({ content })
     }
 
     // Template for '#refunderinger'
     if (thread.parent?.name === 'refunderinger') {
-        return await thread.send({
-            content: 'Kvittering SKAL ha følgende for å bli godkjent:\n```\nDato for kjøp\nOrganisasjonsnummer til selger\nKvitteringsnummer\nHvem som har kjøpt\nHvem som har solgt\nBetalingsform (Vipps, Visa)\nMVA: (12%, 15%, 25%)\nTotalsum (med og uten MVA)\nHva som er kjøpt (fritekst)\nPDF til kvittering som vedlegg\nVedtektssak (MED URL)\nKontonummer```'
-        })
+        const content = `Kvittering SKAL ha følgende for å bli godkjent:
+\`\`\`
+Dato for kjøp
+Organisasjonsnummer til selger
+Kvitteringsnummer
+Hvem som har kjøpt
+Hvem som har solgt
+Betalingsform (Vipps, Visa)
+MVA: (12%, 15%, 25%)
+Totalsum (med og uten MVA)
+Hva som er kjøpt (fritekst)
+PDF til kvittering som vedlegg
+Vedtektssak (MED URL)
+Kontonummer
+\`\`\``
+        return await thread.send({ content })
     }
 }

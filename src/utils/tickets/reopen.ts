@@ -67,7 +67,9 @@ export default async function reopenTicket(interaction: ChatInputCommandInteract
         const roles = new ActionRowBuilder<RoleSelectMenuBuilder>().addComponents(selectRoles)
         const users = new ActionRowBuilder<UserSelectMenuBuilder>().addComponents(selectUsers)
 
-        const content = `${interaction.user}, your ticket has been reopened!\nPlease select the tags, roles, and users you want to add to this ticket.\nNote that tags can only be set once per 5 minutes.`
+        const content = `${interaction.user}, your ticket has been reopened!\n` +
+            'Please select the tags, roles, and users you want to add to this ticket.\n' +
+            'Note that tags can only be set once per 5 minutes.'
         const components = [tags, roles, users]
         await channel.send({ content, components })
 

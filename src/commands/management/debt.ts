@@ -70,8 +70,12 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             return await interaction.reply({ content: 'This command can only be used in the tekkom-verv-møte channel.', ephemeral: true })
         }
     } else {
-        if (interaction.channelId !== config.tekkomVervChannelId && interaction.channelId !== PLAYHOUSE_CHANNEL_ID) {
-            return await interaction.reply({ content: 'This command can only be used in the tekkom-verv-møte or a playhouse channel.', ephemeral: true })
+        if (interaction.channelId !== config.tekkomVervChannelId &&
+            interaction.channelId !== PLAYHOUSE_CHANNEL_ID) {
+            return await interaction.reply({
+                content: 'This command can only be used in the tekkom-verv-møte or a playhouse channel.',
+                ephemeral: true
+            })
         }
     }
 

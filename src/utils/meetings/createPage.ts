@@ -11,7 +11,11 @@ export default async function createPage({ content, description, path, title }: 
     const mutation = `
     mutation Page {
         pages {
-            create (content: """${content}""", description: "${description}", editor: "markdown", isPublished: true, isPrivate: false, locale: "en", path: "${path}", tags: ["TekKom", "TekKom Verv", "Møte", "TekKom Møte", "TekKom Verv Møte", "Meeting", "TekKom Meeting"], title: "${title}") {
+            create (content: """${content}""", description: "${description}",
+            editor: "markdown", isPublished: true, isPrivate: false, locale: "en",
+            path: "${path}",
+            tags: ["TekKom", "TekKom Verv", "Møte", "TekKom Møte", "TekKom Verv Møte", "Meeting", "TekKom Meeting"],
+            title: "${title}") {
                 responseResult {
                     succeeded,
                     errorCode,

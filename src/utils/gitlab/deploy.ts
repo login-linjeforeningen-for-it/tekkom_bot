@@ -3,7 +3,15 @@ import { postTag } from '#utils/gitlab/tags.ts'
 import { initialButtons } from '#utils/gitlab/buttons.ts'
 import editEverySecondTillDone from '#utils/gitlab/editEverySecondTillDone.ts'
 
-export default async function deploy(interaction: ButtonInteraction, tag: string, name: string, id: number, dev: string, ref?: string, rerun?: true) {
+export default async function deploy(
+    interaction: ButtonInteraction,
+    tag: string,
+    name: string,
+    id: number,
+    dev: string,
+    ref?: string,
+    rerun?: true
+) {
     const message = interaction.message
     const title = `Deploying v${tag}${dev} for ${name}`
     const embed = new EmbedBuilder()

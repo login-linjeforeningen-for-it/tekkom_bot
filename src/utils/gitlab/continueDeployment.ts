@@ -62,7 +62,10 @@ export default async function continueDeployment({ interaction, embed, latestVer
     } catch {
         const errorEmbed = new EmbedBuilder()
             .setTitle('Invalid version')
-            .setDescription(`The last tag is ${latestVersion}, this lacks a 'x.y.z' pattern, and is not a valid version. Please either create a new tag manually, or delete all incorrect tags manually.`)
+            .setDescription(
+                `The last tag is ${latestVersion}, this lacks a 'x.y.z' pattern, and is not a valid version. ` +
+                'Please either create a new tag manually, or delete all incorrect tags manually.'
+            )
             .setTimestamp()
         if (embed) {
             await interaction.reply({ embeds: [embed, errorEmbed] })

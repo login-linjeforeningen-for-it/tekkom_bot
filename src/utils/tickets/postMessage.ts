@@ -45,7 +45,11 @@ export default async function postMessage(ticketID: number, message: Message, bo
             const response = await fetch(url, options)
 
             if (!response.ok) {
-                throw new Error(`Failed to post message to zammad: ${await response.text()}\nURL: ${url}\nStatus: ${response.status}\nOptions: ${JSON.stringify(options)}`)
+                const errText = await response.text()
+                throw new Error(
+                    `Failed to post message to zammad: ${errText}\n` +
+                    `URL: ${url}\nStatus: ${response.status}\nOptions: ${JSON.stringify(options)}`
+                )
             }
 
             return response.status

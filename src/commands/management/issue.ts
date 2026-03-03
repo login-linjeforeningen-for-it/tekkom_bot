@@ -82,7 +82,9 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     let match = null as GithubRepoSearchResultItem | null
     const repositories = await getRepositories(25, repository)
 
-    if ((!interaction.channel || !('name' in interaction.channel) || !interaction.channel.name?.toLocaleLowerCase().includes('tekkom-kontakt')) && !isAllowedAnywhere) {
+    const notTekkomKontakt = !interaction.channel || !('name' in interaction.channel) ||
+        !interaction.channel.name?.toLocaleLowerCase().includes('tekkom-kontakt')
+    if (notTekkomKontakt && !isAllowedAnywhere) {
         return await interaction.reply({ content: 'This isnt a tekkom-kontakt channel.', flags: MessageFlags.Ephemeral })
     }
 

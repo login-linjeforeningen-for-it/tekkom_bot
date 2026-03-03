@@ -6,7 +6,10 @@ import config from '#config'
  * @param recipient Optional recipient parameter to find who the recipient is
  * @returns Ticket (with recipient if requested)
  */
-export default async function fetchTicket(id: number, recipient: boolean = false): Promise<ErrorClosed | ReducedMessage[] | string | Error> {
+export default async function fetchTicket(
+    id: number,
+    recipient: boolean = false
+): Promise<ErrorClosed | ReducedMessage[] | string | Error> {
     try {
         const response = await fetch(`${config.api}/dizambee/ticket/${id}/${recipient}`, {
             headers: {

@@ -41,7 +41,7 @@ export default async function requestWithRetries({query, retries = 10, delay = 1
                 // Retry on authentication errors
                 retries--
                 if (retries === 0) {
-                    throw new Error('Exceeded maximum retries for authentication errors')
+                    throw new Error('Exceeded maximum retries for authentication errors', { cause: error })
                 }
             } else {
                 // Logs full stack trace

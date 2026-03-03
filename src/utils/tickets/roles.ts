@@ -52,7 +52,11 @@ export default async function manageRoles(interaction: ButtonInteraction, ping?:
                 })
             } else {
                 // @ts-expect-error
-                return interaction.channel?.send(`<@${interaction.user.id}> the role${possibleRoles.length > 1 ? 's you selected have' : ' you selected has'} too many members to be pinged. Try \`/addviewer\` instead to add without pinging.`)
+                return interaction.channel?.send(
+                    `<@${interaction.user.id}> the role` +
+                    `${possibleRoles.length > 1 ? 's you selected have' : ' you selected has'} ` +
+                    'too many members to be pinged. Try `/addviewer` instead to add without pinging.'
+                )
             }
         }
 

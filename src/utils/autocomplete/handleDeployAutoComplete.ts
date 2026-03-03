@@ -11,7 +11,8 @@ export default async function handleDeployAndReleaseAutoComplete(interaction: Au
     let relevant = new Set<RepositorySimple>()
     const isDeploy = interaction.commandName === DEPLOY
     const repositories = await getRepositories(25, query)
-    const fallbackResult = `No repositories ${query.length > 0 ? `matching '${query}'` : ''} are ready for ${isDeploy ? 'deployment' : 'release'}.`
+    const matchText = query.length > 0 ? `matching '${query}'` : ''
+    const fallbackResult = `No repositories ${matchText} are ready for ${isDeploy ? 'deployment' : 'release'}.`
 
     // Autocompletes repositories
     if (focusedName === REPOSITORY) {

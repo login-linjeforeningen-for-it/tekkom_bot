@@ -7,7 +7,9 @@
     "scripts": {
         "start": "node src/deployCommands.ts; node src/index.ts",
         "refresh": "node src/deployCommands.ts",
-        "fast": "node src/index.ts"
+        "fast": "node src/index.ts",
+        "lint": "eslint ./src",
+        "lint:fix": "eslint --fix ./src"
     },
     "author": "Login - Linjeforeningen for IT",
     "license": "MIT",
@@ -25,6 +27,7 @@
         "@types/node": "^25.3.3",
         "@types/node-cron": "^3.0.11",
         "@types/pg": "^8.18.0",
+        "eslint": "^10.0.2",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.56.1"
     },

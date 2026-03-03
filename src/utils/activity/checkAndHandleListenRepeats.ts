@@ -66,7 +66,10 @@ export default async function checkAndHandleListenRepeats(
                     console.log(response.message, response.error)
                 }
 
-                console.log(`${member.user.tag} ${isError ? 'tried to repeat' : 'repeated'} the song: ${spotify.details} by ${spotify.state}, skipped: ${skipped}`)
+                console.log(
+                    `${member.user.tag} ${isError ? 'tried to repeat' : 'repeated'} ` +
+                    `the song: ${spotify.details} by ${spotify.state}, skipped: ${skipped}`
+                )
             } else if (spotify.syncId !== last?.syncId) {
                 // New song
                 const response = await sendListen(listen)

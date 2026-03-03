@@ -20,7 +20,11 @@ async function create(message: ChatInputCommandInteraction) {
 
     const embed = new EmbedBuilder()
         .setTitle('Support tickets')
-        .setDescription('Feel free to open a support ticket if you have encountered any problems, need someone to do something, or have any questions, and we will reach out to you as soon as possible.')
+        .setDescription(
+            'Feel free to open a support ticket if you have encountered any problems, ' +
+            'need someone to do something, or have any questions, ' +
+            'and we will reach out to you as soon as possible.'
+        )
         .setColor('#fd8738')
         .setTimestamp()
         .addFields(

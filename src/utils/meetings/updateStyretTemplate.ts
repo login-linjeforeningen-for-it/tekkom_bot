@@ -71,15 +71,15 @@ export default async function updateStyretTemplate({channel, isStyret, template,
     }
 
     reduced.orientations = reduced.orientations.map((message) =>
-        message = message.replace(`### O - ${year} - Sak: 000`, `### O - ${year} - Sak: ${caseNumber++}`)
+        message.replace(`### O - ${year} - Sak: 000`, `### O - ${year} - Sak: ${caseNumber++}`)
     )
 
     reduced.discussions = reduced.discussions.map((message) =>
-        message = message.replace(`### D - ${year} - Sak: 000`, `### D - ${year} - Sak: ${caseNumber++}`)
+        message.replace(`### D - ${year} - Sak: 000`, `### D - ${year} - Sak: ${caseNumber++}`)
     )
 
     reduced.statutes = reduced.statutes.map((message) =>
-        message = message.replace(`### V - ${year} - Sak: 000`, `### V - ${year} - Sak: ${caseNumber++}`)
+        message.replace(`### V - ${year} - Sak: 000`, `### V - ${year} - Sak: ${caseNumber++}`)
     )
 
     const u1 = template.replace(/### O - 00 - Sak: 000 - Tittel - Saksansvarlig: Rolle/,
@@ -109,5 +109,8 @@ async function getContent({type, message, week, year}: GetContentProps) {
 
     const assets = uploadedAttachments.length > 0 ? `\nVedlegg:\n${uploadedAttachments.join('\n')}\n` : ''
 
-    return `### ${type} - ${year} - Sak: 000 - ${content[0].slice(3)} - Saksansvarlig: ${message.member?.displayName || message.author.username}\n${background}\n${assets}\n- ***Notater:***\n${type === 'V' ? '- ***Vedtatt / Ikke vedtatt:***\n' : ''}<br>`
+    const header = `### ${type} - ${year} - Sak: 000 - ${content[0].slice(3)} - ` +
+        `Saksansvarlig: ${message.member?.displayName || message.author.username}`
+    const footer = `\n- ***Notater:***\n${type === 'V' ? '- ***Vedtatt / Ikke vedtatt:***\n' : ''}<br>`
+    return `${header}\n${background}\n${assets}${footer}`
 }

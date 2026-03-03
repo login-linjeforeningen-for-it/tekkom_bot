@@ -134,7 +134,7 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
             let previousUpdate = 0
             let lastId: string | undefined
             let timeout = 5
-            let previousTimeout = 5
+            let previousTimeout
 
             while (true) {
                 const batch = await channel.messages.fetch({ limit: 100, before: lastId })
@@ -172,7 +172,8 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
                         console.error(`Rate limited delete, timing out for ${timeout} seconds.`)
 
                         await btn.editReply({
-                            content: `Deleted ${recentDeleted} recent messages and ${oldDeleted} old messages. Still going...\nWaiting ${timeout < 60000 ? `${timeout} seconds` : `${timeout / 60} minutes`} due to rate limit.`,
+                            content: `Deleted ${recentDeleted} recent messages and ${oldDeleted} old messages. Still going...\n` +
+                                `Waiting ${timeout < 60000 ? `${timeout} seconds` : `${timeout / 60} minutes`} due to rate limit.`,
                             embeds: [],
                             components: [],
                         })

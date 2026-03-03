@@ -125,7 +125,11 @@ export async function execute(message: ChatInputCommandInteraction) {
     if (now.getTime() - latestCommitDate.getTime() > TWO_WEEKS) {
         const embedOldWarning = new EmbedBuilder()
             .setTitle('Very old commit (>2w). Are you sure?')
-            .setDescription(`The most recent commit for ${match.name} branch 'main' is more than two weeks old. It was created ${latestCommitDate.toLocaleString('no-NO')}. Are you sure you want to release this version?`)
+            .setDescription(
+                `The most recent commit for ${match.name} branch 'main' is more than two weeks old. ` +
+                `It was created ${latestCommitDate.toLocaleString('no-NO')}. ` +
+                'Are you sure you want to release this version?'
+            )
             .setColor('#ff0000')
 
         // Creates 'yes' button

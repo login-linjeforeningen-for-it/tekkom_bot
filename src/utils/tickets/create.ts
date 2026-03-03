@@ -189,7 +189,9 @@ export default async function handleCreateTicket(interaction: ButtonInteraction)
             newChannel.setName(id)
 
             await newChannel.send({
-                content: `# ${title}\n${interaction.user}, your ${text} has been created!\nPlease select the tags, roles, and users you want to add to this ticket.\nNote that tags can only be set once per 5 minutes.`,
+                content: `# ${title}\n${interaction.user}, your ${text} has been created!\n` +
+                    'Please select the tags, roles, and users you want to add to this ticket.\n' +
+                    'Note that tags can only be set once per 5 minutes.',
                 components: [tags, roles, users, close],
             })
 

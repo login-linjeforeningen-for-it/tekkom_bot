@@ -1,4 +1,13 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, MessageFlags, PermissionFlagsBits, TextChannel, EmbedBuilder, ChannelType, User } from 'discord.js'
+import {
+    SlashCommandBuilder,
+    ChatInputCommandInteraction,
+    MessageFlags,
+    PermissionFlagsBits,
+    TextChannel,
+    EmbedBuilder,
+    ChannelType,
+    User
+} from 'discord.js'
 
 export const data = new SlashCommandBuilder()
     .setName('retroactive')

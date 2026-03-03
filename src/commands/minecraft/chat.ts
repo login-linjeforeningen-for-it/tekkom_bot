@@ -93,7 +93,7 @@ async function updatePlayerCount(message: ChatInputCommandInteraction) {
         let creative = [] as string[]
         const maxWidth = 20
         let players = ''
-        let topic = ''
+        let topic
 
         await Promise.allSettled(config.minecraft_servers.map(async (server) => {
             const response = await fetch(`${config.minecraft_url}:${server.port}/${server.name}-online`)
@@ -124,7 +124,8 @@ async function updatePlayerCount(message: ChatInputCommandInteraction) {
         const online = survival.length + creative.length
 
         if (online) {
-            topic = `Logins Minecraft server. Online: ${online}\nSurvival (${survival.length})\t\t\t\t   Creative (${creative.length})\n${players}`
+            topic = `Logins Minecraft server. Online: ${online}\nSurvival (${survival.length})\t\t\t\t   Creative (${creative.length})\n` +
+                `${players}`
         } else {
             topic = 'Logins Minecraft server. There are no players online at this time.'
         }

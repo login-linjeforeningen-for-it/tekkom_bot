@@ -3,7 +3,10 @@ import { FALLBACK_PIPELINE, SUCCESS } from '#constants'
 import getPipelines, { getBridgesForPipeline, getJobsForPipeline } from '#utils/gitlab/pipeline.ts'
 import { errorButtons, initialButtons, successButtons } from '#utils/gitlab/buttons.ts'
 
-export default async function editEverySecondTillDone(message: Message, user: string, id: number, tag: string, name: string, seconds: number = 1, prod?: true): Promise<boolean> {
+export default async function editEverySecondTillDone(
+    message: Message, user: string, id: number, tag: string,
+    name: string, seconds: number = 1, prod?: true
+): Promise<boolean> {
     const startTime = new Date().getTime()
     const dev = prod ? '' : '-dev'
 
@@ -61,19 +64,31 @@ export default async function editEverySecondTillDone(message: Message, user: st
                         : [initialButtons]
             })
         } catch {
-            console.log(`Discord message for ${name}, version ${tag}${dev} was deleted. Continuing on Gitlab, check UI for results.`)
+            console.log(
+                `Discord message for ${name}, version ${tag}${dev} was deleted. ` +
+                'Continuing on Gitlab, check UI for results.'
+            )
             return false
         }
 
         switch (pipeline.status) {
             case SUCCESS:
-                console.log(`${name} version ${tag}${dev} deployed by ${user} completed successfully after ${Seconds}s (Repository ID ${id}).`)
+                console.log(
+                    `${name} version ${tag}${dev} deployed by ${user} ` +
+                    `completed successfully after ${Seconds}s (Repository ID ${id}).`
+                )
                 return true
             case 'canceled':
-                console.warn(`Deployment of ${name} version ${tag}${dev} deployed by ${user} was canceled after ${Seconds}s (Repository ID ${id}).`)
+                console.warn(
+                    `Deployment of ${name} version ${tag}${dev} deployed by ${user} ` +
+                    `was canceled after ${Seconds}s (Repository ID ${id}).`
+                )
                 return false
             case 'failed':
-                console.log(`Deployment of ${name} version ${tag}${dev} deployed by ${user} failed after ${Seconds}s (Repository ID ${id}).`)
+                console.log(
+                    `Deployment of ${name} version ${tag}${dev} deployed by ${user} ` +
+                    `failed after ${Seconds}s (Repository ID ${id}).`
+                )
                 return false
         }
     }

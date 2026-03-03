@@ -118,8 +118,10 @@ export default async function updateIndex({path, query, isStyret}: UpdateIndexPr
         const updatedContent = modifyPage({existingHTML: content, path, isStyret: content.includes('styremoter')})
         const TekKomTitle = 'Meetings'
         const TekKomDescription = isStyret
-            ? 'Styretmøte referater. Denne siden er automatisert. Endre med forsiktighet for å unngå å ødelegge automatisjonen. Rapporter feil til Styret.'
-            : 'TekKom meeting agendas and minutes. This page is automatically managed. Please edit with care. Report errors to TekKom.'
+            ? 'Styretmøte referater. Denne siden er automatisert. ' +
+            'Endre med forsiktighet for å unngå å ødelegge automatisjonen. Rapporter feil til Styret.'
+            : 'TekKom meeting agendas and minutes. This page is automatically managed. ' +
+            'Please edit with care. Report errors to TekKom.'
         const updateResponse = await requestWithRetries({query: updateMutation({
             id: isStyret ? STYRET_PAGE : TEKKOM_PAGE,
             content: updatedContent,

@@ -76,7 +76,8 @@ export default async function manageUsers(interaction: ButtonInteraction, ping?:
 
         const content = remove
             ? `${interaction.user.username} removed ${validUsers.map((user: User) => user.username).join(', ')} from the ticket.`
-            : `${interaction.user.username} added ${validUsers.map((user: User) => ping === undefined ? `<@${user.id}>` : user.username).join(', ')} to the ticket.`
+            : `${interaction.user.username} added ` +
+              `${validUsers.map((user: User) => ping === undefined ? `<@${user.id}>` : user.username).join(', ')} to the ticket.`
         // @ts-expect-error
         interaction.channel?.send({content})
 

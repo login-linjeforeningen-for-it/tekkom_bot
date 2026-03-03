@@ -15,7 +15,9 @@ export default function formatCommits(commits: Commit[], count: number) {
         const minute = created.getMinutes().toString().padStart(2, '0')
         const formatDate = `${day}.${month}.${year}, ${hour}:${minute}`
         const description = `${formatDate}. ${commits[i].title}`
-        descriptions += `${description.slice(0, DISCORD_MAX_INLINE_EMBED_FIELD_LENGTH).trim()}${description.length > DISCORD_MAX_INLINE_EMBED_FIELD_LENGTH ? '…' : ''}\n`
+        const trimmed = description.slice(0, DISCORD_MAX_INLINE_EMBED_FIELD_LENGTH).trim()
+        const suffix = description.length > DISCORD_MAX_INLINE_EMBED_FIELD_LENGTH ? '…' : ''
+        descriptions += `${trimmed}${suffix}\n`
         i++
     }
 

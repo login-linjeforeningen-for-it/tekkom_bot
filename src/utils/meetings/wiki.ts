@@ -75,12 +75,15 @@ export default async function autoCreate({channel, isStyret, styremote}: AutoCre
     console.log(`Create response for ${isStyret ? 'Styret' : 'TekKom'} at ${now}: ${JSON.stringify(createResponse)}`)
 
     if (isStyret) {
-        console.log(`<@&${DISCORD_STYRET_ROLE_ID}> Minner om Styremøte på LL kl 17. [Agenda](${WIKI_URL}${STYRET_MEETINGS_URL}${path.nextPath}).`)
-        styremote?.send(`<@&${DISCORD_STYRET_ROLE_ID}> Minner om Styremøte på LL kl 17. [Agenda](${WIKI_URL}${STYRET_MEETINGS_URL}${path.nextPath}).`)
+        const styretMsg = `<@&${DISCORD_STYRET_ROLE_ID}> Minner om Styremøte på LL kl 17. ` +
+            `[Agenda](${WIKI_URL}${STYRET_MEETINGS_URL}${path.nextPath}).`
+        console.log(styretMsg)
+        styremote?.send(styretMsg)
     } else {
         // The real message is moved to QueenBee, this log is only there to be
         // able to track problems with the page creation automation.
-        console.log(`<@&${DISCORD_TEKKOM_ROLE_ID}> Minner om TekKom møte på onsdag kl 16 på LL. [Agenda](${WIKI_URL}${TEKKOM_MEETINGS_URL}${path.nextPath}).`)
+        console.log(`<@&${DISCORD_TEKKOM_ROLE_ID}> Minner om TekKom møte på onsdag kl 16 på LL. ` +
+            `[Agenda](${WIKI_URL}${TEKKOM_MEETINGS_URL}${path.nextPath}).`)
     }
 
     updateIndex({ path, query: getQuery(isStyret ? STYRET_PAGE : TEKKOM_PAGE), isStyret })

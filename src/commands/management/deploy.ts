@@ -75,7 +75,10 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const latestVersion = version[0] || FALLBACK_TAG
 
     if (!commits.length) {
-        return await interaction.reply({ content: `No commits exist for branch ${branch} in repository '${repository}'.`, flags: MessageFlags.Ephemeral })
+        return await interaction.reply({
+            content: `No commits exist for branch ${branch} in repository '${repository}'.`,
+            flags: MessageFlags.Ephemeral
+        })
     }
 
     const now = new Date()
@@ -106,7 +109,11 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     if (now.getTime() - latestCommitDate.getTime() > TWO_WEEKS) {
         const embedOldWarning = new EmbedBuilder()
             .setTitle('Very old commit (>2w). Are you sure?')
-            .setDescription(`The most recent commit for ${match.name}${branch ? ` branch ${branch}` : ''} is more than two weeks old. It was created ${latestCommitDate.toLocaleString('no-NO')}. Are you sure this is the commit you want to deploy?`)
+            .setDescription(
+                `The most recent commit for ${match.name}${branch ? ` branch ${branch}` : ''} ` +
+                `is more than two weeks old. It was created ${latestCommitDate.toLocaleString('no-NO')}. ` +
+                'Are you sure this is the commit you want to deploy?'
+            )
             .setColor('#ff0000')
 
         // Creates 'yes' button

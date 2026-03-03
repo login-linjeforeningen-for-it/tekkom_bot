@@ -91,7 +91,8 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const rolesString = roles.join(' ')
     const iconsString = icons.join(' ')
 
-    const commandString = `/updaterolemessage title:${title} description:${description} roles:${rolesString} icons:${iconsString} id:${messageID}${channelPart}`
+    const commandString = `/updaterolemessage title:${title} description:${description} ` +
+        `roles:${rolesString} icons:${iconsString} id:${messageID}${channelPart}`
 
     await interaction.reply({
         content: `\`\`\`\n${commandString}\n\`\`\``

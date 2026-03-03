@@ -34,7 +34,8 @@ export async function execute(message: ChatInputCommandInteraction) {
     const screen = { id: message.options.getString('screen') } as EventWithOnlyID
 
     // Checking if the author is allowed to remove users from the whitelist
-    const isAllowed = (message.member?.roles as unknown as Roles)?.cache.some((role: Role) => role.id === config.roleID || role.id === config.styret)
+    const isAllowed = (message.member?.roles as unknown as Roles)?.cache.some((role: Role) =>
+        role.id === config.roleID || role.id === config.styret)
 
     // Aborts if the user does not have sufficient permissions
     if (!isAllowed) {
@@ -44,7 +45,8 @@ export async function execute(message: ChatInputCommandInteraction) {
 
     if (!title || !description || !topic) {
         return await message.reply({
-            content: `You must provide a ${title ? '' : 'title'} ${description ? '' : 'description'} ${topic ? '' : 'topic'} to send notifications`,
+            content: `You must provide a ${title ? '' : 'title'} ${description ? '' : 'description'} ` +
+                `${topic ? '' : 'topic'} to send notifications`,
             flags: MessageFlags.Ephemeral
         })
     }
