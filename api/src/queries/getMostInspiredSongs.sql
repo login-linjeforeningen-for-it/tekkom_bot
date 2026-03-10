@@ -1,7 +1,8 @@
 SELECT 
     s.name AS song, 
     ar.name AS artist, 
-    al.name AS album, 
+    al.name AS album,
+    s.inspired,
     s.skips, 
     s.listens,
     s.id,
