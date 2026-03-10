@@ -1,7 +1,7 @@
 SELECT 
     e.name AS "name",
     ar.name AS show,
-    s.inspired,
+    e.inspired,
     e.skips,
     e.listens,
     e.id,
