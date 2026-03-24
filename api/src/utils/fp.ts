@@ -16,9 +16,9 @@ export default fp(async (fastify) => {
         const start = Date.now()
 
         fastify.gameHot = await preloadGameActivityQueriesHot()
-        console.log('Refresh games HOT:', fastify.gameHot)
+        console.log('Refresh games HOT (keys):', Object.keys(fastify.gameHot))
         fastify.listenHot = await preloadListenActivityQueriesHot()
-        console.log('Refresh listens HOT:', fastify.listenHot)
+        console.log('Refresh listens HOT (keys):', Object.keys(fastify.listenHot))
 
         alertSlowQuery((Date.now() - start) / 1000, 'cache hot')
         console.log('Hot activity queries refreshed')
@@ -28,9 +28,9 @@ export default fp(async (fastify) => {
         const start = Date.now()
 
         fastify.gameCold = await preloadGameActivityQueriesCold()
-        console.log('Refresh games COLD:', fastify.gameCold)
+        console.log('Refresh games COLD (keys):', Object.keys(fastify.gameCold))
         fastify.listenCold = await preloadListenActivityQueriesCold()
-        console.log('Refresh listens COLD:', fastify.listenCold)
+        console.log('Refresh listens COLD (keys):', Object.keys(fastify.listenCold))
 
         alertSlowQuery((Date.now() - start) / 1000, 'cache-cold')
         console.log('Cold activity queries refreshed')
