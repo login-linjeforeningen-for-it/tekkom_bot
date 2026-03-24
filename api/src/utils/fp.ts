@@ -16,20 +16,24 @@ export default fp(async (fastify) => {
         const start = Date.now()
 
         fastify.gameHot = await preloadGameActivityQueriesHot()
+        console.log('Refresh games HOT:', fastify.gameHot)
         fastify.listenHot = await preloadListenActivityQueriesHot()
+        console.log('Refresh listens HOT:', fastify.listenHot)
 
         alertSlowQuery((Date.now() - start) / 1000, 'cache hot')
-        fastify.log.debug('Hot activity queries refreshed')
+        console.log('Hot activity queries refreshed')
     }
 
     async function refreshCold() {
         const start = Date.now()
 
         fastify.gameCold = await preloadGameActivityQueriesCold()
+        console.log('Refresh games COLD:', fastify.gameCold)
         fastify.listenCold = await preloadListenActivityQueriesCold()
+        console.log('Refresh listens COLD:', fastify.listenCold)
 
         alertSlowQuery((Date.now() - start) / 1000, 'cache-cold')
-        fastify.log.info('Cold activity queries refreshed')
+        console.log('Cold activity queries refreshed')
     }
 
     function rebuildBuffers() {
@@ -54,7 +58,7 @@ export default fp(async (fastify) => {
 
     refreshColdAndRebuild()
         .then(() => refreshHotAndRebuild())
-        .catch((err) => fastify.log.error({ err }, 'Initial cache population failed, will retry on next interval'))
+        .catch((error) => console.log('Initial cache population failed, will retry on next interval', error))
 
     setInterval(refreshHotAndRebuild, config.CACHE_TTL_HOT)
     setInterval(refreshColdAndRebuild, config.CACHE_TTL_COLD)
