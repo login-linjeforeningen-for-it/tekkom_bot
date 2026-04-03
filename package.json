@@ -23,11 +23,15 @@
     "devDependencies": {
         "@eslint/js": "^10.0.1",
         "@stylistic/eslint-plugin": "^5.10.0",
-        "@types/node": "^25.5.0",
+        "@types/node": "^25.5.2",
         "@types/node-cron": "^3.0.11",
         "@types/pg": "^8.20.0",
         "eslint": "^10.1.0",
+<<<<<<< HEAD
         "typescript": "^5.9.3",
+=======
+        "typescript": "^6.0.2",
+>>>>>>> 3ce000f (Updated deps)
         "typescript-eslint": "^8.58.0"
     },
     "imports": {
