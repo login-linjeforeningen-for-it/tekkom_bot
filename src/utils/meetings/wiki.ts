@@ -38,7 +38,7 @@ type AutoCreateProps = {
     styremote?: TextChannel
 }
 
-export default async function autoCreate({channel, isStyret, styremote}: AutoCreateProps) {
+export default async function autoCreate({ channel, isStyret, styremote }: AutoCreateProps) {
     const path = getNextPathYearAndWeek(isStyret)
     const styret_id = Number(WIKI_STYRET_TEMPLATE_ID)
     const tekkom_id = Number(WIKI_TEKKOM_TEMPLATE_ID)

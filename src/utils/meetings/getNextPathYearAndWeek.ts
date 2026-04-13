@@ -15,16 +15,16 @@ export default  function getNextPathYearAndWeek(isStyret: boolean) {
     // Calculate next week's year and week
     const nextWeek = getYearAndWeek(nextWeekDate)
 
-    // Calculate next Wednesday based on nextWeekDate
-    const nextWednesdayDate = new Date(nextWeekDate)
-    const dayOfWeek = nextWednesdayDate.getDay()
-    const daysUntilWednesday = (3 - dayOfWeek + 7) % 7
-    nextWednesdayDate.setDate(nextWednesdayDate.getDate() + daysUntilWednesday)
+    // Calculate next Tuesday based on nextWeekDate
+    const nextTuesdayDate = new Date(nextWeekDate)
+    const dayOfWeek = nextTuesdayDate.getDay()
+    const daysUntilTuesday = (2 - dayOfWeek + 7) % 7
+    nextTuesdayDate.setDate(nextTuesdayDate.getDate() + daysUntilTuesday)
 
-    // Format nextWednesdayDate to dd.mm.yy
-    const day = String(nextWednesdayDate.getDate()).padStart(2, '0')
-    const month = String(nextWednesdayDate.getMonth() + 1).padStart(2, '0')
-    const year = String(nextWednesdayDate.getFullYear())
+    // Format nextTuesdayDate to dd.mm.yy
+    const day = String(nextTuesdayDate.getDate()).padStart(2, '0')
+    const month = String(nextTuesdayDate.getMonth() + 1).padStart(2, '0')
+    const year = String(nextTuesdayDate.getFullYear())
 
     // Today
     const todaysDate = new Date()

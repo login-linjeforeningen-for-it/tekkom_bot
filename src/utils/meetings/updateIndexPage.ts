@@ -32,12 +32,12 @@ type Path = {
 
 const { TEKKOM_MEETINGS_URL, STYRET_MEETINGS_URL } = process.env
 
-if (!TEKKOM_MEETINGS_URL || !STYRET_MEETINGS_URL ) {
+if (!TEKKOM_MEETINGS_URL || !STYRET_MEETINGS_URL) {
     throw new Error('Missing essential environment variables in wiki.ts')
 }
 
 // Mutation to update the page content
-function updateMutation({id, content, description, title}: UpdateMutationProps) {
+function updateMutation({ id, content, description, title }: UpdateMutationProps) {
     return (
         `
             mutation Page {
@@ -73,18 +73,13 @@ function updateMutation({id, content, description, title}: UpdateMutationProps) 
 }
 
 // Function to update the page content
-function modifyPage({existingHTML, path, isStyret}: ModifyPageProps) {
+function modifyPage({ existingHTML, path, isStyret }: ModifyPageProps) {
     const paths = [TEKKOM_MEETINGS_URL, STYRET_MEETINGS_URL]
     const newEntry = `- [${path.nextPath}${isStyret ? ' - Styremøte' : ''}](${paths[isStyret ? 1 : 0]}${path.nextPath})`
-
-    // Regex for both styret and tekkom formats
     const styretRegex = /(- \[\d{4}-\d+ - Styremøte\]\(\/public\/docs\/minutes\/styremoter\/\d{4}-\d+\))/
     const tekkomRegex = /(- \[\d{4}-\d+\]\(\/tekkom\/meetings\/\d{4}-\d+\))/
-
-    // Choose the appropriate regex based on isStyret
     const regex = isStyret ? styretRegex : tekkomRegex
 
-    // Checks if the entry already exists
     if (existingHTML.includes(newEntry)) {
         return existingHTML
     }
@@ -111,23 +106,25 @@ function modifyPage({existingHTML, path, isStyret}: ModifyPageProps) {
 }
 
 // Fetches the page, adds the new document, and writes it back
-export default async function updateIndex({path, query, isStyret}: UpdateIndexProps) {
+export default async function updateIndex({ path, query, isStyret }: UpdateIndexProps) {
     try {
         const fetchResponse = await requestWithRetries({ query })
         const content = fetchResponse.data.pages.single.content
-        const updatedContent = modifyPage({existingHTML: content, path, isStyret: content.includes('styremoter')})
+        const updatedContent = modifyPage({ existingHTML: content, path, isStyret: content.includes('styremoter') })
         const TekKomTitle = 'Meetings'
         const TekKomDescription = isStyret
             ? 'Styretmøte referater. Denne siden er automatisert. ' +
             'Endre med forsiktighet for å unngå å ødelegge automatisjonen. Rapporter feil til Styret.'
             : 'TekKom meeting agendas and minutes. This page is automatically managed. ' +
             'Please edit with care. Report errors to TekKom.'
-        const updateResponse = await requestWithRetries({query: updateMutation({
-            id: isStyret ? STYRET_PAGE : TEKKOM_PAGE,
-            content: updatedContent,
-            description: TekKomDescription,
-            title: TekKomTitle
-        })})
+        const updateResponse = await requestWithRetries({
+            query: updateMutation({
+                id: isStyret ? STYRET_PAGE : TEKKOM_PAGE,
+                content: updatedContent,
+                description: TekKomDescription,
+                title: TekKomTitle
+            })
+        })
 
         if (updateResponse) {
             console.log(`${isStyret ? 'Styret' : 'TekKom'} index file updated successfully.`)
