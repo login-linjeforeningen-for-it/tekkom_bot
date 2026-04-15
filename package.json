@@ -1,6 +1,6 @@
 {
     "name": "tekkom_bot",
-    "version": "2.18.0",
+    "version": "2.18.1",
     "description": "TekKom Bot",
     "main": "app.js",
     "type": "module",
@@ -14,11 +14,11 @@
     "author": "Login - Linjeforeningen for IT",
     "license": "MIT",
     "dependencies": {
-        "discord.js": "^14.26.2",
+        "discord.js": "^14.26.3",
         "fs": "^0.0.1-security",
         "node-cron": "^4.2.1",
         "pg": "^8.20.0",
-        "utilbee": "^1.4.1"
+        "utilbee": "^1.4.3"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -28,7 +28,7 @@
         "@types/pg": "^8.20.0",
         "eslint": "^10.2.0",
         "typescript": "^6.0.2",
-        "typescript-eslint": "^8.58.1"
+        "typescript-eslint": "^8.58.2"
     },
     "imports": {
         "#constants": "./src/constants.ts",
