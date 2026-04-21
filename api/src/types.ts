@@ -96,6 +96,8 @@ declare global {
     type CurrentlyListening = {
         id: number
         song_id: string
+        artist_id: string
+        album_id: string | null
         user_id: string
         start: string
         end: string
@@ -103,15 +105,20 @@ declare global {
         skipped: boolean
         timestamp: string
         image: string
+        name: string
+        artist: string
+        album: string | null
     }
 
     type Album = {
         album: string
+        album_id: string
         artist: string
-        listens: number
+        artist_id: string
+        total_listens: number
         top_song: string
         top_song_image: string
-        top_song_id: string
+        song_id: string
     }
 
     type Artist = {
@@ -122,21 +129,25 @@ declare global {
     type CountedSong = {
         name: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         listens: number
         image: string
-        id: string
+        song_id: string
     }
 
     type SongDay = {
         day: string
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         image: string
         listens: number
         total_songs_played: number
-        id: string
+        song_id: string
     }
 
     type ActiveUser = {
@@ -148,9 +159,11 @@ declare global {
     type TopXSong = {
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         image: string
-        id: string
+        song_id: string
         listens: number
     }
 
@@ -170,65 +183,80 @@ declare global {
 
     type LikedAlbum = {
         album: string
+        album_id: string
         artist: string
+        artist_id: string
         total_listens: number
         total_skips: number
         like_ratio: number
         image: string
+        song_id: string
     }
 
     type LikedArtist = {
         artist: string
+        artist_id: string
         total_listens: number
         total_skips: number
         like_ratio: number
         image: string
+        song_id: string
     }
 
     type LikedSong = {
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         skips: number
         listens: number
         image: string
         like_ratio: number
+        song_id: string
     }
 
     type SkippedAlbum = {
         album: string
+        album_id: string
         artist: string
+        artist_id: string
         skips: number
         top_song: string
         top_song_image: string
-        id: string
+        song_id: string
     }
 
     type SkippedArtist = {
         artist: string
-        skips: string
+        artist_id: string
+        skips: number
         top_song: string
         album: string
+        album_id: string
         image: string
-        id: string
+        song_id: string
     }
 
     type SkippedSong = {
         song: string
         artist: string
+        artist_id: string
         album: string
+        album_id: string
         skips: number
         image: string
-        id: string
+        song_id: string
     }
 
     type ArtistPlayed = {
         artist: string
+        artist_id: string
         listens: number
         top_song: string
         album: string
         image: string
-        id: string
+        song_id: string
     }
 
     type Game = {

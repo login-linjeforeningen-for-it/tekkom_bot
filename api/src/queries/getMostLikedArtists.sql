@@ -1,7 +1,8 @@
 SELECT 
     ar.name AS artist,
+    ar.id AS artist_id,
     s_top."image",
-    s.id,
+    s_top.id AS song_id,
     SUM(s.listens) AS total_listens,
     SUM(s.skips) AS total_skips,
     (SUM(s.listens)::float / NULLIF(SUM(s.listens + s.skips), 0)) AS like_ratio
@@ -14,7 +15,7 @@ JOIN LATERAL (
     ORDER BY s2.listens DESC
     LIMIT 1
 ) AS s_top ON true
-GROUP BY ar.name, s_top."image", s.id
+GROUP BY ar.name, ar.id, s_top."image", s_top.id
 HAVING SUM(s.listens) >= 10
    AND SUM(s.skips) >= 5
 ORDER BY like_ratio DESC

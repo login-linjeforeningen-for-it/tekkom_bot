@@ -5,7 +5,9 @@ WITH daily_counts AS (
         ar.name AS artist,
         al.name AS album,
         s."image",
-        s.id,
+        s.id AS song_id,
+        s.artist AS artist_id,
+        s.album AS album_id,
         COUNT(*)::INT AS listens
     FROM listens l
     JOIN songs s ON l.song_id = s.id
@@ -13,7 +15,7 @@ WITH daily_counts AS (
     JOIN albums al ON s.album = al.id
     WHERE l."start" >= NOW() - INTERVAL '365 days'
       AND NOT l.skipped
-    GROUP BY day, s.name, ar.name, al.name, s."image", s.id
+    GROUP BY day, s.name, ar.name, al.name, s."image", s.id, s.artist, s.album
 ),
 ranked AS (
     SELECT 
@@ -23,12 +25,14 @@ ranked AS (
         album, 
         "image", 
         listens, 
-        id,
+        song_id,
+        artist_id,
+        album_id,
         ROW_NUMBER() OVER (PARTITION BY day ORDER BY listens DESC) AS rn,
         SUM(listens) OVER (PARTITION BY day)::INT AS total_songs_played
     FROM daily_counts
 )
-SELECT day, song, artist, album, "image", listens, total_songs_played, id
+SELECT day, song, artist, album, "image", listens, total_songs_played, song_id, artist_id, album_id
 FROM ranked
 WHERE rn = 1
 ORDER BY day ASC;

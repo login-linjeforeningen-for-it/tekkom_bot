@@ -3,6 +3,8 @@ SELECT * FROM (
     l.*,
     COALESCE(s."image", e."image") AS "image",
     COALESCE(s.name, e.name) AS name,
+    COALESCE(s.artist, e.show) AS artist_id,
+    s.album AS album_id,
     ar.name AS artist,
     al.name AS album
   FROM listens l

@@ -1,3 +1,4 @@
+import { installJsonConsoleLogger, log } from '#utils/jsonLogger.ts'
 import config from '#config'
 import { removeRole } from '#utils/roles.ts'
 import autoCreateTekKomMeetings from '#utils/meetings/autoCreateTekKomMeetings.ts'
@@ -16,6 +17,8 @@ import setupClient from '#utils/setupClient.ts'
 import type { CacheType, ThreadChannel, Presence, Message, Interaction } from 'discord.js'
 import { Events } from 'discord.js'
 
+installJsonConsoleLogger()
+
 const token = config.token
 const client = await setupClient()
 const lastListens: LastListens = new Map()
@@ -27,7 +30,12 @@ client.once(Events.ClientReady, async () => {
     queenbeeMonitor(client)
     autoSyncZammad(client)
     heartbeat()
-    console.log('Ready!')
+    log('info', 'Discord bot ready', {
+        event: 'bot.ready',
+        guildId: client.guilds.cache.first()?.id,
+        userId: client.user.id,
+        username: client.user.username,
+    })
 
     setInterval(async () => {
         await checkAndHandleListenRepeats(client, lastListens)
@@ -68,23 +76,44 @@ client.on<Events.PresenceUpdate>(Events.PresenceUpdate, async (oldPresence: Pres
 
 client.login(token)
 
-client.rest.on('rateLimited', (info) => console.log(`Rate limit: ${JSON.stringify(info)}`))
+client.rest.on('rateLimited', (info) => console.warn('Discord REST rate limited', {
+    event: 'discord.rate_limited',
+    route: info.route,
+    method: info.method,
+    hash: info.hash,
+    majorParameter: info.majorParameter,
+    limit: info.limit,
+    retryAfter: info.retryAfter,
+    scope: info.scope,
+})
+)
 
 process.on('unhandledRejection', async (error) => {
     if ((error as { message: string }).message === 'Interaction has already been acknowledged.') {
-        console.log('Interaction has already been acknowledged.')
+        console.warn('Interaction has already been acknowledged.', {
+            event: 'discord.interaction_already_acknowledged',
+        })
         return
     }
 
-    console.log(`Unhandled Promise Rejection:\n${error}`)
+    console.error('Unhandled promise rejection', {
+        event: 'process.unhandled_rejection',
+        error,
+    })
 })
 
 process.on('uncaughtException', async (error) => {
-    console.log(`Uncaught Promise Exception:\n${error}`)
+    console.error('Uncaught exception', {
+        event: 'process.uncaught_exception',
+        error,
+    })
 })
 
 process.on('uncaughtExceptionMonitor', async (error) => {
-    console.log(`Uncaught Promise Exception (Monitor):\n${error}`)
+    console.error('Uncaught exception monitor', {
+        event: 'process.uncaught_exception_monitor',
+        error,
+    })
 })
 
 export default client

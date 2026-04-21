@@ -60,6 +60,35 @@ export default async function postListen(
         let type = 'Unknown'
 
         let show: string | null = null
+        const songResult = await run(
+            'SELECT artist, album FROM songs WHERE id = $1 LIMIT 1;',
+            [id]
+        )
+        const existingSong = songResult?.rows[0] as
+            | { artist?: string | null, album?: string | null }
+            | undefined
+
+        if (existingSong?.artist && existingSong.artist !== 'Unknown') {
+            artistId = existingSong.artist
+            type = 'track'
+        }
+
+        if (existingSong?.album && existingSong.album !== 'Unknown') {
+            albumId = existingSong.album
+            type = 'track'
+        }
+
+        const existingEpisodeResult = type === 'Unknown'
+            ? await run('SELECT show FROM episodes WHERE id = $1 LIMIT 1;', [id])
+            : null
+        const existingEpisode = existingEpisodeResult?.rows[0] as
+            | { show?: string | null }
+            | undefined
+
+        if (existingEpisode?.show && existingEpisode.show !== 'Unknown') {
+            artistId = existingEpisode.show
+            type = 'episode'
+        }
 
         const artistIdAndAlbumIdIsNotKnown = !(await artistIdAndAlbumIdIsKnownBySongId(id))
         const shouldQuerySpotify = artistIdAndAlbumIdIsNotKnown || Math.random() < 0.1
@@ -106,19 +135,13 @@ export default async function postListen(
                 console.log('Spotify lookup failed:', error)
             }
         } else {
-            const result = await run('SELECT * FROM songs WHERE id = $1;', [id])
-            if (result && result.rows.length > 0) {
-                const row = result.rows[0]
-                artistId = row.artist_id || 'Unknown'
-                albumId = row.album_id || 'Unknown'
+            if (existingSong) {
+                artistId = existingSong.artist || artistId
+                albumId = existingSong.album || albumId
                 type = 'track'
-            } else {
-                const episodeResult = await run('SELECT * FROM episodes WHERE id = $1;', [id])
-                if (episodeResult && episodeResult.rows.length > 0) {
-                    const row = episodeResult.rows[0]
-                    artistId = row.show || 'Unknown'
-                    type = 'episode'
-                }
+            } else if (existingEpisode) {
+                artistId = existingEpisode.show || artistId
+                type = 'episode'
             }
         }
 

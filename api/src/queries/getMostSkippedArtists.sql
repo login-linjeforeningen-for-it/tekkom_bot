@@ -20,11 +20,13 @@ top_songs AS (
 )
 SELECT 
     ar.name AS artist,
+    ar.id AS artist_id,
     ak.skips,
     ts.top_song,
     al.name AS album,
+    al.id AS album_id,
     ts."image",
-    ts.id
+    ts.id AS song_id
 FROM artist_skips ak
 JOIN artists ar ON ak.artist_id = ar.id
 LEFT JOIN top_songs ts ON ak.artist_id = ts.artist_id

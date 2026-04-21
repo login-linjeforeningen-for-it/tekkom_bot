@@ -5,7 +5,9 @@ SELECT
     s.inspired,
     s.skips, 
     s.listens,
-    s.id,
+    s.id AS song_id,
+    s.artist AS artist_id,
+    s.album AS album_id,
     s."image",
     (s.listens::float / NULLIF(s.listens + s.skips, 0)) AS like_ratio
 FROM songs s
