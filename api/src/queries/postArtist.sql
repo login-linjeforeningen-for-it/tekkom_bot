@@ -4,7 +4,13 @@ ON CONFLICT (id) DO UPDATE
 SET 
     listens = artists.listens + 1,
     timestamp = NOW(),
-    name = EXCLUDED.name,
+    name = CASE
+             WHEN EXCLUDED.name IS NOT NULL
+                  AND BTRIM(EXCLUDED.name) <> ''
+                  AND EXCLUDED.name <> 'Unknown'
+             THEN EXCLUDED.name
+             ELSE artists.name
+           END,
     id = CASE 
            WHEN artists.id = 'Unknown' AND EXCLUDED.id IS NOT NULL AND EXCLUDED.id <> 'Unknown' 
            THEN EXCLUDED.id

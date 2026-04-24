@@ -6,6 +6,15 @@ import { loadSQL } from '#utils/loadSQL.ts'
 import tokenWrapper from '#utils/tokenWrapper.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
+function normalizeArtistName(value: unknown, fallback = 'Unknown') {
+    if (typeof value !== 'string') {
+        return fallback
+    }
+
+    const trimmed = value.trim()
+    return trimmed || fallback
+}
+
 export default async function postListen(
     req: FastifyRequest,
     res: FastifyReply
@@ -177,6 +186,8 @@ export default async function postListen(
 
         const artistQuery = await loadSQL('postArtist.sql')
         let insertedSongId = null
+        const trackArtistName = normalizeArtistName(artist)
+        const episodeArtistName = normalizeArtistName(show, trackArtistName)
 
         const currentlyListeningQuery = await loadSQL('getCurrentlyListening.sql')
 
@@ -196,14 +207,14 @@ export default async function postListen(
                 console.log(`Error with currently listens: ${JSON.stringify(error)}`)
             }
 
-            await run(artistQuery, [artistId || 'Unknown', artist])
+            await run(artistQuery, [artistId || 'Unknown', trackArtistName])
             const albumQuery = await loadSQL('postAlbum.sql')
             await run(albumQuery, [albumId || 'Unknown', album])
             const songQuery = await loadSQL('postSongListen.sql')
             const songResult = await run(songQuery, [id, name, artistId, albumId, image])
             insertedSongId = songResult.rows[0].id
         } else if (type === 'episode') {
-            await run(artistQuery, [artistId || 'Unknown', show])
+            await run(artistQuery, [artistId || 'Unknown', episodeArtistName])
             const episodeQuery = await loadSQL('postEpisode.sql')
             const episodeResult = await run(episodeQuery, [id, name, artistId, image])
             insertedSongId = episodeResult.rows[0].id
