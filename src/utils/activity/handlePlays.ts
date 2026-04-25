@@ -9,6 +9,11 @@ export default async function handlePlays({ newPresence }: HandlePlayProps) {
     const playing = newPresence.activities.find(a => a.type === 0) as unknown as Game
 
     if (playing) {
+        const avatar = newPresence.user?.displayAvatarURL({
+            extension: 'png',
+            size: 256,
+        }) ?? null
+
         const activity = {
             user: newPresence.user?.tag ?? 'Unknown',
             name: playing.name,
@@ -20,7 +25,7 @@ export default async function handlePlays({ newPresence }: HandlePlayProps) {
             image: playing.assets?.smallImage ?? playing.assets?.largeImage ?? null,
             imageText: playing.assets?.smallText ?? playing.assets?.largeText ?? null,
             userId: newPresence.userId,
-            avatar: newPresence.user?.avatar,
+            avatar,
         }
 
         const response = await sendGame(activity)
