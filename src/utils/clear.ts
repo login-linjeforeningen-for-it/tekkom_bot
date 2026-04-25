@@ -8,8 +8,10 @@ import {
     ButtonBuilder,
     ButtonStyle,
     MessageFlags,
-    TextChannel,
+    ChannelType,
     ComponentType,
+    TextChannel,
+    ThreadChannel,
 } from 'discord.js'
 import deleteWithTimeout from './deleteWithoutTimeout.ts'
 
@@ -24,14 +26,22 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
         })
     }
 
-    if (!interaction.channel || interaction.channel.type !== 0) {
+    const permittedTypes = [
+        ChannelType.GuildText,
+        ChannelType.PublicThread,
+        ChannelType.PrivateThread,
+        ChannelType.AnnouncementThread,
+    ]
+
+    if (!interaction.channel || !permittedTypes.includes(interaction.channel.type)) {
         return interaction.reply({
-            content: 'This command can only be used in text channels.',
+            content: 'This command can only be used in text channels or threads.',
             flags: MessageFlags.Ephemeral,
         })
     }
 
-    const channel = interaction.channel as TextChannel
+    const channel = interaction.channel as TextChannel | ThreadChannel
+    const channelLabel = interaction.channel.isThread() ? 'thread' : 'channel'
 
     const messages = await channel.messages.fetch({ limit: 100 })
     const messageCount = messages.size
@@ -44,7 +54,7 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
     }
 
     const embed = new EmbedBuilder()
-        .setTitle('Confirm channel clear')
+        .setTitle(`Confirm ${channelLabel} clear`)
         .setColor('#ff0000')
         .setDescription(`You are about to delete **${messageCount} messages** in ${channel}.`)
 
@@ -99,7 +109,7 @@ export default async function clear(interaction: ChatInputCommandInteraction) {
         if (btn.customId === 'clear_cancel') {
             collector.stop('cancelled')
             return btn.update({
-                content: 'Channel clear cancelled.',
+                content: `${channelLabel[0].toUpperCase()}${channelLabel.slice(1)} clear cancelled.`,
                 embeds: [],
                 components: [],
             })
