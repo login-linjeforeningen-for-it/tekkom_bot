@@ -6,15 +6,6 @@ import { loadSQL } from '#utils/loadSQL.ts'
 import tokenWrapper from '#utils/tokenWrapper.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-function normalizeArtistName(value: unknown, fallback = 'Unknown') {
-    if (typeof value !== 'string') {
-        return fallback
-    }
-
-    const trimmed = value.trim()
-    return trimmed || fallback
-}
-
 export default async function postListen(
     req: FastifyRequest,
     res: FastifyReply
@@ -62,7 +53,15 @@ export default async function postListen(
     }
 
     try {
-        console.log(`Adding song: '${name}' by artist '${artist}' for user '${user}'.`)
+        const normalizedUser = normalizeListenField(user)
+        const normalizedName = normalizeListenField(name)
+        const normalizedArtist = normalizeListenField(artist)
+        const normalizedAlbum = normalizeListenField(album)
+        const normalizedImage = normalizeListenField(image)
+        const normalizedAvatar = normalizeListenField(avatar)
+        const normalizedSource = normalizeListenField(source)
+
+        console.log(`Adding song: '${normalizedName}' by artist '${normalizedArtist}' for user '${normalizedUser}'.`)
 
         let artistId: string = 'Unknown'
         let albumId: string = 'Unknown'
@@ -182,11 +181,11 @@ export default async function postListen(
         }
 
         const userQuery = await loadSQL('postUser.sql')
-        await run(userQuery, [userId, avatar, user])
+        await run(userQuery, [userId, normalizedAvatar, normalizedUser])
 
         const artistQuery = await loadSQL('postArtist.sql')
         let insertedSongId = null
-        const trackArtistName = normalizeArtistName(artist)
+        const trackArtistName = normalizeArtistName(normalizedArtist)
         const episodeArtistName = normalizeArtistName(show, trackArtistName)
 
         const currentlyListeningQuery = await loadSQL('getCurrentlyListening.sql')
@@ -209,27 +208,49 @@ export default async function postListen(
 
             await run(artistQuery, [artistId || 'Unknown', trackArtistName])
             const albumQuery = await loadSQL('postAlbum.sql')
-            await run(albumQuery, [albumId || 'Unknown', album])
+            await run(albumQuery, [albumId || 'Unknown', normalizedAlbum])
             const songQuery = await loadSQL('postSongListen.sql')
-            const songResult = await run(songQuery, [id, name, artistId, albumId, image])
+            const songResult = await run(songQuery, [id, normalizedName, artistId, albumId, normalizedImage])
             insertedSongId = songResult.rows[0].id
         } else if (type === 'episode') {
             await run(artistQuery, [artistId || 'Unknown', episodeArtistName])
             const episodeQuery = await loadSQL('postEpisode.sql')
-            const episodeResult = await run(episodeQuery, [id, name, artistId, image])
+            const episodeResult = await run(episodeQuery, [id, normalizedName, artistId, normalizedImage])
             insertedSongId = episodeResult.rows[0].id
         }
 
         const listenQuery = await loadSQL('postListen.sql')
-        await run(listenQuery, [userId, insertedSongId, type, start, end, source, skipped ?? false])
+        await run(listenQuery, [userId, insertedSongId, type, start, end, normalizedSource, skipped ?? false])
 
         return res.send({
             message: type === 'track'
-                ? `Successfully added song ${name} by ${artist}, played by ${user}`
-                : `Successfully added episode ${name} from show ${artist}, played by ${user}`,
+                ? `Successfully added song ${normalizedName} by ${normalizedArtist}, played by ${normalizedUser}`
+                : `Successfully added episode ${normalizedName} from show ${normalizedArtist}, played by ${normalizedUser}`,
         })
     } catch (error) {
         console.log(`Database error: ${JSON.stringify(error)}`)
         return res.status(500).send({ error: 'Internal Server Error' })
     }
+}
+
+function normalizeArtistName(value: unknown, fallback = 'Unknown') {
+    if (typeof value !== 'string') {
+        return fallback
+    }
+
+    const trimmed = value.trim()
+    return trimmed || fallback
+}
+
+function normalizeListenField(value: unknown, fallback = 'Unknown') {
+    if (typeof value !== 'string') {
+        return fallback
+    }
+
+    const trimmed = value.trim()
+    if (!trimmed || trimmed.toLowerCase() === 'null' || trimmed.toLowerCase() === 'undefined') {
+        return fallback
+    }
+
+    return trimmed
 }

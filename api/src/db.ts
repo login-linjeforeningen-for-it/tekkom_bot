@@ -24,6 +24,31 @@ const pool = new Pool({
     keepAlive: true
 })
 
+function isRetryableDatabaseError(error: unknown) {
+    if (!error || typeof error !== 'object') {
+        return false
+    }
+
+    const code = 'code' in error ? error.code : undefined
+    return typeof code === 'string' && [
+        '57P01',
+        '57P02',
+        '57P03',
+        '08000',
+        '08001',
+        '08003',
+        '08004',
+        '08006',
+        '08007',
+        '08P01',
+        '53300',
+        'ETIMEDOUT',
+        'ECONNRESET',
+        'ECONNREFUSED',
+        'EPIPE',
+    ].includes(code)
+}
+
 export default async function run(query: string, params?: SQLParamType) {
     while (true) {
         try {
@@ -35,6 +60,9 @@ export default async function run(query: string, params?: SQLParamType) {
             }
         } catch (error) {
             console.error('Postgres connection failed:', error)
+            if (!isRetryableDatabaseError(error)) {
+                throw error
+            }
             console.log(`Pool currently unavailable, retrying in ${config.CACHE_TTL_HOT / 1000}s...`)
             await sleep(config.CACHE_TTL_HOT)
         }

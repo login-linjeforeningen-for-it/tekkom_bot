@@ -1,5 +1,5 @@
 INSERT INTO artists (id, name)
-VALUES ($1, $2)
+VALUES ($1, COALESCE(NULLIF(BTRIM($2), ''), 'Unknown'))
 ON CONFLICT (id) DO UPDATE
 SET 
     listens = artists.listens + 1,
