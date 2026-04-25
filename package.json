@@ -1,6 +1,6 @@
 {
     "name": "tekkom_bot",
-    "version": "2.18.2",
+    "version": "2.18.3",
     "description": "TekKom Bot",
     "main": "app.js",
     "type": "module",
@@ -18,7 +18,7 @@
         "fs": "^0.0.1-security",
         "node-cron": "^4.2.1",
         "pg": "^8.20.0",
-        "utilbee": "^1.4.3"
+        "utilbee": "^1.4.5"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -26,9 +26,9 @@
         "@types/node": "^25.6.0",
         "@types/node-cron": "^3.0.11",
         "@types/pg": "^8.20.0",
-        "eslint": "^10.2.0",
-        "typescript": "^6.0.2",
-        "typescript-eslint": "^8.58.2"
+        "eslint": "^10.2.1",
+        "typescript": "^6.0.3",
+        "typescript-eslint": "^8.59.0"
     },
     "imports": {
         "#constants": "./src/constants.ts",
