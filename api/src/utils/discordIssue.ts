@@ -2,13 +2,14 @@ import config from '#constants'
 
 const { WEBHOOK_URL_ISSUE } = config
 
-export default async function discordIssue(title: string, description: string, footer: string, color: string) {
+export default async function discordIssue(title: string, description: string, footer: string, color: string, url?: string) {
     try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data: { content?: string; embeds: any[] } = {
             embeds: [
                 {
                     title: title,
+                    url: url,
                     description: description,
                     color: getColor(color),
                     timestamp: new Date().toISOString(),

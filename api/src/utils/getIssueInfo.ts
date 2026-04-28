@@ -6,7 +6,8 @@ export default async function getIssueInfo(
     issueTitle: string;
     repoName: string;
     projectName: string;
-    color: string
+    color: string;
+    issueUrl?: string
 }> {
     const query = `
         query($nodeId: ID!) {
@@ -15,6 +16,7 @@ export default async function getIssueInfo(
                     content {
                         ... on Issue {
                             title
+                            url
                             repository {
                                 name
                             }
@@ -55,10 +57,11 @@ export default async function getIssueInfo(
 
         const data = await response.json()
         const issueTitle = data.data.node?.content?.title || 'Unknown Issue'
+        const issueUrl = data.data.node?.content?.url
         const repoName = data.data.node?.content?.repository?.name || 'Unknown Repo'
         const projectName = data.data.node?.project?.title || 'Unknown Project'
         const color = data.data.node?.fieldValues?.nodes?.find((f: {color?: string}) => f.color)?.color || 'default'
-        return { issueTitle, repoName, projectName, color }
+        return { issueTitle, issueUrl, repoName, projectName, color }
     } catch {
         return { issueTitle: 'Unknown Issue', repoName: 'Unknown Repo', projectName: 'Unknown Project', color: 'default' }
     }
