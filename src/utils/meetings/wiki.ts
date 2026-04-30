@@ -18,6 +18,8 @@ const {
     WIKI_URL,
     WIKI_STYRET_TEMPLATE_ID,
     WIKI_TEKKOM_TEMPLATE_ID,
+    OUTLINE_STYRET_MEETINGS_URL = 'https://outline.login.no/s/doc/doc/styremoter-NoccT8oCxz',
+    OUTLINE_TEKKOM_MEETINGS_URL = 'https://outline.login.no/doc/meetings-uhV0CO42ly',
 } = process.env
 
 if (
@@ -76,14 +78,14 @@ export default async function autoCreate({ channel, isStyret, styremote }: AutoC
 
     if (isStyret) {
         const styretMsg = `<@&${DISCORD_STYRET_ROLE_ID}> Minner om Styremøte på LL kl 17. ` +
-            `[Agenda](${WIKI_URL}${STYRET_MEETINGS_URL}${path.nextPath}).`
+            `[Agenda](${OUTLINE_STYRET_MEETINGS_URL}).`
         console.log(styretMsg)
         styremote?.send(styretMsg)
     } else {
         // The real message is moved to QueenBee, this log is only there to be
         // able to track problems with the page creation automation.
         console.log(`<@&${DISCORD_TEKKOM_ROLE_ID}> Minner om TekKom møte på onsdag kl 16 på LL. ` +
-            `[Agenda](${WIKI_URL}${TEKKOM_MEETINGS_URL}${path.nextPath}).`)
+            `[Agenda](${OUTLINE_TEKKOM_MEETINGS_URL}).`)
     }
 
     updateIndex({ path, query: getQuery(isStyret ? STYRET_PAGE : TEKKOM_PAGE), isStyret })
