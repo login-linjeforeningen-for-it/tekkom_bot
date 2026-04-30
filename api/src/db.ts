@@ -69,6 +69,15 @@ export default async function run(query: string, params?: SQLParamType) {
     }
 }
 
+export async function runOnce(query: string, params?: SQLParamType) {
+    const client = await pool.connect()
+    try {
+        return await client.query(query, params ?? [])
+    } finally {
+        client.release()
+    }
+}
+
 function sleep(ms: number) {
     return new Promise(res => setTimeout(res, ms))
 }

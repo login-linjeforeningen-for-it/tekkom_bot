@@ -31,11 +31,13 @@ import getTicket from './handlers/dizambee/getTicket.ts'
 import getUser from './handlers/dizambee/getUser.ts'
 import getUsers from './handlers/dizambee/getUsers.ts'
 import getGroups from './handlers/dizambee/getGroups.ts'
+import getDatabaseHealth from './handlers/health/getDatabase.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default async function apiRoutes(fastify: FastifyInstance, _: FastifyPluginOptions) {
     // index
     fastify.get('/', getIndex)
+    fastify.get('/health/database', getDatabaseHealth)
 
     // channels
     fastify.get('/channels', getChannels)
