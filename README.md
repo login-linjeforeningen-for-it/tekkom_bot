@@ -14,4 +14,4 @@ sure to select TekKom not Carl-bot in the Discord UI.
 ### Secrets file
 This bot uses environment variables. Contact us on Discord if you are interested in contributing.
 
-Browse the bot docs [here](https://wiki.login.no/en/tekkom/projects/tekkombot).
+Browse the bot docs [here](https://outline.login.no/s/tekkombot).
