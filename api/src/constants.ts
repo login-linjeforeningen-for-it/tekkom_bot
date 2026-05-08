@@ -7,7 +7,7 @@ envLoad({ path: ['.env', '../.env'] })
 
 const requiredEnvironmentVariables = [
     'AUTHENTIK_API_URL',
-    'CLIENT_ID',
+    'DISCORD_CLIENT_ID',
     'REDIRECT_URI',
     'CLIENT_SECRET',
     'QUEENBEE_URL',
@@ -56,7 +56,7 @@ const config = {
     DB_HOST: env.DB_HOST,
     DB_USER: env.DB_USER,
     DB_PASSWORD: env.DB_PASSWORD,
-    CLIENT_ID: env.CLIENT_ID,
+    CLIENT_ID: env.DISCORD_CLIENT_ID,
     REDIRECT_URI: env.REDIRECT_URI,
     TOKEN_URL,
     CLIENT_SECRET: env.CLIENT_SECRET,
