@@ -22,7 +22,7 @@ function cronTimeHasCome(announcement: RecurringAnnouncement) {
     const interval = announcement.interval
     const lastSent = announcement.last_sent
 
-    const cronMatch = interval.match(/^(\S+) (\S+) (\S+) (\S+) (\S+)(?: (\/(\d+)))?$/)
+    const cronMatch = interval.match(/^(\S+) (\S+) (\S+) (\S+) (\S+)(?: (\*?\/(\d+)))?$/)
     if (!cronMatch) {
         return false
     }

@@ -3,8 +3,8 @@
   "version": "2.18.2",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx --watch src/index.ts",
-    "start": "node src/index.ts",
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src"
   },
@@ -14,25 +14,23 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@eslint/js": "^10.0.1",
     "@fastify/cors": "^11.2.0",
-    "@stylistic/eslint-plugin": "^5.10.0",
     "cron-parser": "^5.5.0",
-    "eslint": "^10.3.0",
     "fast-levenshtein": "^3.0.0",
     "fastify": "^5.8.5",
-    "node-cron": "^4.2.1",
     "pg": "^8.20.0",
-    "redis": "^5.12.1",
-    "tsx": "^4.21.0",
-    "typescript-eslint": "^8.59.3",
     "utilbee": "^1.4.7"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/bun": "^1.3.14",
     "@types/fast-levenshtein": "^0.0.4",
     "@types/node": "^25.7.0",
     "@types/pg": "^8.20.0",
-    "typescript": "^5.9.3"
+    "eslint": "^10.3.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.59.3"
   },
   "imports": {
     "#utils/*": "./src/utils/*",
