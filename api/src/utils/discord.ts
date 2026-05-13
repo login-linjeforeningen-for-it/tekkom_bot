@@ -1,0 +1,49 @@
+import config from '#constants'
+import { discordAlert as sendDiscordAlert } from 'utilbee/utils'
+
+const { CRITICAL_ROLE, WEBHOOK_URL, WEBHOOK_URL_ISSUE } = config
+
+export async function discordAlert(description: string, ping: boolean = false) {
+    try {
+        await sendDiscordAlert({
+            webhookURL: WEBHOOK_URL ?? '',
+            title: 'Tekkom Bot BTG',
+            description,
+            ping: ping ? CRITICAL_ROLE ?? '' : undefined,
+        })
+        return 200
+    } catch (error) {
+        console.log(error)
+        return 500
+    }
+}
+
+export async function discordIssue(title: string, description: string, footer: string, color: string, url?: string) {
+    try {
+        await sendDiscordAlert({
+            webhookURL: WEBHOOK_URL_ISSUE ?? '',
+            title,
+            description,
+            url,
+            footer,
+            color: getColor(color),
+        })
+        return 200
+    } catch (error) {
+        console.log(`Error while creating Discord issue: ${error}`)
+        throw error
+    }
+}
+
+function getColor(name: string) {
+    switch (name.toLowerCase()) {
+        case 'blue':   return 0x4493f8
+        case 'green':  return 0x3fb950
+        case 'yellow': return 0xd29922
+        case 'orange': return 0xdb6d28
+        case 'red':    return 0xf85149
+        case 'pink':   return 0xdb61a2
+        case 'purple': return 0xab7df8
+        default:       return 0x9198a1
+    }
+}

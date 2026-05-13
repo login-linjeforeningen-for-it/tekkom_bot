@@ -1,5 +1,5 @@
 import run from '#db'
-import discordAlert from '#utils/discordAlert.ts'
+import { discordAlert } from '#utils/discord.ts'
 
 export default async function checkAndAlert(name: string, service: string, middleware: boolean) {
     let ping = true
@@ -24,8 +24,8 @@ export default async function checkAndAlert(name: string, service: string, middl
     }
 
     if (!middleware) {
-        await discordAlert(`Detected BTG login towards ${service} from user 
-            ${name}. Please verify that there are currently known issues with 
-            Authentik and that this is expected.`, '', true)
+        await discordAlert(`Detected BTG login towards ${service} from user
+            ${name}. Please verify that there are currently known issues with
+            Authentik and that this is expected.`, true)
     }
 }

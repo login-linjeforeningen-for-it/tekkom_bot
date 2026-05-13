@@ -1,4 +1,4 @@
-import discordIssue from '#utils/discordIssue.ts'
+import { discordIssue } from '#utils/discord.ts'
 import getIssueName from '#utils/getIssueInfo.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import crypto from 'crypto'

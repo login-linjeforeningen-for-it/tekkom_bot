@@ -1,5 +1,5 @@
 import run from '#db'
-import discordAlert from '#utils/discordAlert.ts'
+import { discordAlert } from '#utils/discord.ts'
 import tokenWrapper from '#utils/tokenWrapper.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
@@ -16,10 +16,10 @@ export default async function postBtg(req: FastifyRequest, res: FastifyReply) {
 
     try {
         console.log(`Adding btg exception with name '${name}' for service '${service}' by author '${author}'.`)
-        await discordAlert(`BTG ping exception for user ${name}, service 
-            ${service} was addedto the TekKom Bot API by <@${author}>. Please 
-            verify that there are currently known issues with Authentik and 
-            that this is expected.`, 'post')
+        await discordAlert(`BTG ping exception for user ${name}, service
+            ${service} was addedto the TekKom Bot API by <@${author}>. Please
+            verify that there are currently known issues with Authentik and
+            that this is expected.`)
 
         await run(
             `INSERT INTO btg (name, service, author) 

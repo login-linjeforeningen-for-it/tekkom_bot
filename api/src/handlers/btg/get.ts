@@ -1,5 +1,5 @@
 import run from '#db'
-import discordAlert from '#utils/discordAlert.ts'
+import { discordAlert } from '#utils/discord.ts'
 import tokenWrapper from '#utils/tokenWrapper.ts'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
@@ -16,8 +16,8 @@ export default async function getBtg(req: FastifyRequest, res: FastifyReply) {
 
     await discordAlert(`BTG ping exceptions for user ${name} for ${service} were
         fetched from the TekKom Bot API by <@${author}>. Please verify that
-        there are currently known issues with Authentik and that this is 
-        expected.`, 'get')
+        there are currently known issues with Authentik and that this is
+        expected.`)
 
     const result = await run(
         'SELECT name, service FROM btg WHERE name = $1 AND service = $2;',
