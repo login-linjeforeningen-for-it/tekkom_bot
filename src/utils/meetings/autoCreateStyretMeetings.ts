@@ -1,5 +1,4 @@
 import { Client, TextChannel } from 'discord.js'
-import { schedule } from 'node-cron'
 import autoCreate from '#utils/meetings/wiki.ts'
 import { envLoad } from 'utilbee'
 
@@ -27,7 +26,7 @@ export default async function autoCreateStyretMeetings(client: Client) {
         throw new Error(`Channel with ID ${DISCORD_STYRET_INNKALLING_CHANNEL_ID} not found in autoCreateStyretMeetings.ts`)
     }
 
-    schedule('0 12 * * 1', () => {
+    Bun.cron('0 12 * * 1', () => {
         autoCreate({ channel, isStyret: true, styremote })
     })
 }
