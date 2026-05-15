@@ -5,7 +5,7 @@ FROM oven/bun:alpine AS builder
 WORKDIR /usr/src/app
 
 # Copies package.json and package-lock.json to the Docker environment
-COPY package.json bun.lock ./
+COPY package.json bun.lock bunfig.toml ./
 RUN bun install --frozen-lockfile
 
 # Copies contents
