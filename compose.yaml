@@ -11,6 +11,12 @@ services:
         depends_on:
             tekkom_bot_api:
                 condition: service_healthy
+        healthcheck:
+            test: ["CMD-SHELL", "pgrep -x bun || exit 1"]
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 10s
         mem_limit: 1g
         cpus: "1.0"
 
@@ -50,9 +56,11 @@ services:
             - postgres_data:/var/lib/postgresql
             - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
         healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U tekkom_bot -d tekkom_bot"]
+            test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-tekkom_bot} -d ${DB:-tekkom_bot}"]
             interval: 5s
+            timeout: 5s
             retries: 5
+            start_period: 10s
         mem_limit: 1g
         cpus: "2.0"
         shm_size: 1gb

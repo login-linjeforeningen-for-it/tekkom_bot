@@ -9,7 +9,8 @@
         "refresh": "bun src/deployCommands.ts",
         "fast": "bun src/index.ts",
         "lint": "eslint ./src",
-        "lint:fix": "eslint --fix ./src"
+        "lint:fix": "eslint --fix ./src",
+    "typecheck": "tsc --noEmit"
     },
     "author": "Login - Linjeforeningen for IT",
     "license": "MIT",
