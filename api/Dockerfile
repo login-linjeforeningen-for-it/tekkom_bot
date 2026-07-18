@@ -1,17 +1,15 @@
-# Latest bun alpine image
-FROM oven/bun:alpine
+FROM oven/bun:alpine AS builder
+WORKDIR /app
 
-# Sets the working directory
-WORKDIR /usr/src/app
-
-# Copies package.json and bun.lock to the Docker environment
 COPY package.json bun.lock bunfig.toml ./
-
-# Installs required dependencies
 RUN bun install --frozen-lockfile
 
-# Copies contents
+RUN addgroup -S app && adduser -S app -G app
+RUN chown app:app /app
+USER app
+
 COPY . .
 
-# Stars the application
-CMD bun start
+EXPOSE 8080
+
+CMD ["bun", "start"]
