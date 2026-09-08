@@ -15,16 +15,14 @@ export default  function getNextPathYearAndWeek(isStyret: boolean) {
     // Calculate next week's year and week
     const nextWeek = getYearAndWeek(nextWeekDate)
 
-    // Calculate next Tuesday based on nextWeekDate
-    const nextTuesdayDate = new Date(nextWeekDate)
-    const dayOfWeek = nextTuesdayDate.getDay()
-    const daysUntilTuesday = (2 - dayOfWeek + 7) % 7
-    nextTuesdayDate.setDate(nextTuesdayDate.getDate() + daysUntilTuesday)
+    // The page is created on the Monday of the meeting week, but the meeting
+    // itself is on the Thursday. Format that Thursday to dd.mm.yy.
+    const meetingDate = new Date(currentDate)
+    meetingDate.setDate(meetingDate.getDate() + 3)
 
-    // Format nextTuesdayDate to dd.mm.yy
-    const day = String(nextTuesdayDate.getDate()).padStart(2, '0')
-    const month = String(nextTuesdayDate.getMonth() + 1).padStart(2, '0')
-    const year = String(nextTuesdayDate.getFullYear())
+    const meetingDay = String(meetingDate.getDate()).padStart(2, '0')
+    const meetingMonth = String(meetingDate.getMonth() + 1).padStart(2, '0')
+    const meetingYear = String(meetingDate.getFullYear())
 
     // Today
     const todaysDate = new Date()
@@ -32,14 +30,16 @@ export default  function getNextPathYearAndWeek(isStyret: boolean) {
     const todayMonth = String(todaysDate.getMonth() + 1).padStart(2, '0')
     const todayYear = String(todaysDate.getFullYear())
 
-    const date = `${day}.${month}.${year.slice(-2)}`
+    const meeting = `${meetingDay}.${meetingMonth}.${meetingYear.slice(-2)}`
     const today = `${todayDay}.${todayMonth}.${todayYear}`
 
     return {
-        currentPath: isStyret ? `${currentWeek.year}-${currentWeek.week - 1}` : '2024-00',
-        nextPath: `${nextWeek.year}-${isStyret ? nextWeek.week - 1 : nextWeek.week}`,
+        currentPath: isStyret ? `${currentWeek.year}-${currentWeek.week - 1}` : '2026-00',
+        nextPath: isStyret
+            ? `${nextWeek.year}-${nextWeek.week - 1}`
+            : `${currentWeek.year}-${currentWeek.week}`,
         currentWeek: currentWeek.week,
-        date: isStyret ? today : date
+        date: isStyret ? today : meeting
     }
 }
 
