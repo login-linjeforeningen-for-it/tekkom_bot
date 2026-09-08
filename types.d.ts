@@ -179,48 +179,6 @@ type Artist = {
     timestamp: string
 }
 
-type Game = {
-    name: string
-    type: number
-    url: null
-    details: string
-    state: string
-    applicationId: string
-    timestamps: { start: Date, end: null }
-    party: { size: number[], id: string }
-    syncId: null
-    assets: {
-        largeText: string | null
-        smallText: string | null
-        largeImage: string | null
-        smallImage: string | null
-    }
-    flags: { bitfield: number }
-    emoji: null
-    buttons: never[]
-    createdTimestamp: number
-}
-
-type SendGame = {
-    user: string
-    userId: string | undefined
-    avatar: string | undefined | null
-    name: string
-    details: string | null
-    state: string | null
-    application: string
-    start: string
-    party: string
-    image: string | null
-    imageText: string | null
-}
-
-type SendGameUpdate = {
-    userId,
-    game,
-    duration
-}
-
 type LastListens = Map<string, {
     syncId: string
     start: number

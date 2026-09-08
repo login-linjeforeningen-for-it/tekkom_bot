@@ -12,12 +12,10 @@ import postRoles from './handlers/roles/post.ts'
 import postListen from './handlers/activity/postListen.ts'
 import getActivity from './handlers/activity/getListen.ts'
 import postHideActivity from './handlers/activity/postHide.ts'
-import postGame from './handlers/activity/postGame.ts'
 import getTrackPreview from './handlers/spotify/get.ts'
 import getDebt from './handlers/debt/get.ts'
 import postDebt from './handlers/debt/post.ts'
 import deleteDebt from './handlers/debt/delete.ts'
-import getGameActivity from './handlers/activity/getGame.ts'
 import getDatabaseHealth from './handlers/health/getDatabase.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,9 +41,7 @@ export default async function apiRoutes(fastify: FastifyInstance, _: FastifyPlug
 
     // activity
     fastify.get('/activity', getActivity)
-    fastify.get('/activity/games', getGameActivity)
     fastify.post('/activity/listen', postListen)
-    fastify.post('/activity/game', postGame)
     fastify.post('/activity/hide', postHideActivity)
 
     // spotify

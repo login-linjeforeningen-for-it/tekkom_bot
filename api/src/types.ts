@@ -253,18 +253,4 @@ declare global {
         song_id: string
     }
 
-    type Game = {
-        name: string
-        user: string
-        userId: string
-        avatar: string
-        details?: string
-        state?: string
-        application?: string
-        start: string
-        party?: string
-        image?: string
-        imageText?: string
-    }
-
 }

@@ -75,28 +75,6 @@ CREATE TABLE IF NOT EXISTS announcements (
     last_sent TIMESTAMPTZ
 );
 
--- Games
-CREATE TABLE IF NOT EXISTS games (
-    id SERIAL PRIMARY KEY,
-    name TEXT UNIQUE NOT NULL,
-    image TEXT,
-    players INT DEFAULT 1,
-    image_text TEXT
-);
-
--- Game Activity
-CREATE TABLE IF NOT EXISTS game_activity (
-    id SERIAL PRIMARY KEY,
-    game_id INT NOT NULL REFERENCES games(id),
-    user_id TEXT NOT NULL REFERENCES users(id),
-    details TEXT,
-    state TEXT,
-    application TEXT,
-    "start" TIMESTAMPTZ NOT NULL,
-    "end" TIMEStAMPTZ NOT NULL,
-    party TEXT
-);
-
 -- Hidden 
 CREATE TABLE IF NOT EXISTS "hidden" (
     id SERIAL PRIMARY KEY,

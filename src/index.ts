@@ -6,7 +6,6 @@ import channelTemplates from '#utils/channelTemplates.ts'
 import queenbeeMonitor from '#utils/queenbee/queenbeeMonitor.ts'
 import heartbeat from '#utils/heartbeat/heartbeat.ts'
 import handleListens from '#utils/activity/handleListens.ts'
-import handlePlays from '#utils/activity/handlePlays.ts'
 import checkAndHandleListenRepeats from '#utils/activity/checkAndHandleListenRepeats.ts'
 import handleInteraction from '#utils/handleInteraction.ts'
 import setupClient from '#utils/setupClient.ts'
@@ -46,7 +45,6 @@ client.on(Events.ThreadCreate, async (thread: ThreadChannel) => {
 
 client.on<Events.PresenceUpdate>(Events.PresenceUpdate, async (oldPresence: Presence | null, newPresence: Presence) => {
     handleListens({ oldPresence, newPresence, lastListens })
-    handlePlays({ newPresence })
 })
 
 client.login(token)
