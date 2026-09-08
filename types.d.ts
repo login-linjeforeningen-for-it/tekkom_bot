@@ -102,57 +102,6 @@ type EventWithOnlyID = {
     id: string
 }
 
-type Ticket = {
-    id: number
-    ticket_id: number
-    type_id: number
-    sender_id: number
-    from: string
-    to: string | null
-    cc: string | null
-    subject: string | null
-    message_id: string | number | null
-    message_id_md5: string
-    in_reply_to: number | null
-    content_type: string
-    references: string | null
-    body: string
-    internal: boolean
-    preferences: {
-        delivery_article_id_related: number
-        delivery_message: boolean
-        notification: boolean
-    }
-    updated_by_id: number
-    created_by_id: number
-    created_at: string
-    updated_at: string
-    origin_by_id: null
-    reply_to: string | number | null
-    attachments: string[]
-    created_by: string
-    updated_by: string
-    type: string
-    sender: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    time_unit: any
-}
-
-type ReducedMessage = {
-    user: string
-    content: string
-    attachments: Attachment[]
-}
-
-type Attachment = {
-    name: string
-    url: string
-}
-
-type ErrorClosed = {
-    error: closed
-}
-
 type User = {
     id: number
     username: string
@@ -288,7 +237,3 @@ type Client = {
     commands: Collection<string, Command>
 }
 
-type TicketOption = {
-    label: string
-    value: string
-}

@@ -17,7 +17,7 @@
 
 ---
 
-TekKom Bot is the Discord bot for TekKom at Login. It handles service monitoring alerts, Minecraft server integration, ticket management, and member administration.
+TekKom Bot is the Discord bot for TekKom at Login. It handles service monitoring alerts, Minecraft server integration, and member administration.
 
 Full documentation is available at [outline.login.no/s/tekkombot](https://outline.login.no/s/tekkombot).
 
@@ -25,7 +25,6 @@ Full documentation is available at [outline.login.no/s/tekkombot](https://outlin
 
 - **Service monitoring alerts** posted to Discord on critical events
 - **Minecraft server integration** for survival and creative servers
-- **Ticket management** for member requests
 - **User management** for the Login Discord server
 
 ## Getting Started
@@ -74,7 +73,7 @@ All variables go in the root `.env` file.
 
 ## Project Structure
 
-- `src/commands/` - Slash command definitions (info, management, minecraft, tickets)
+- `src/commands/` - Slash command definitions (info, management, minecraft)
 - `src/utils/` - Helper utilities
 - `src/config.ts` - Configuration and environment variable loading
 - `api/` - Companion Fastify API for receiving external events

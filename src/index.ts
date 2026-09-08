@@ -1,8 +1,6 @@
 import { installJsonConsoleLogger, log } from '#utils/jsonLogger.ts'
 import config from '#config'
 import autoCreateTekKomMeetings from '#utils/meetings/autoCreateTekKomMeetings.ts'
-import handleTickets from '#utils/tickets/handler.ts'
-import autoSyncZammad from '#utils/tickets/autoSyncZammad.ts'
 import autoCreateStyretMeetings from '#utils/meetings/autoCreateStyretMeetings.ts'
 import channelTemplates from '#utils/channelTemplates.ts'
 import queenbeeMonitor from '#utils/queenbee/queenbeeMonitor.ts'
@@ -12,7 +10,7 @@ import handlePlays from '#utils/activity/handlePlays.ts'
 import checkAndHandleListenRepeats from '#utils/activity/checkAndHandleListenRepeats.ts'
 import handleInteraction from '#utils/handleInteraction.ts'
 import setupClient from '#utils/setupClient.ts'
-import type { CacheType, ThreadChannel, Presence, Message, Interaction } from 'discord.js'
+import type { CacheType, ThreadChannel, Presence, Interaction } from 'discord.js'
 import { Events } from 'discord.js'
 
 installJsonConsoleLogger()
@@ -25,7 +23,6 @@ client.once(Events.ClientReady, async () => {
     autoCreateTekKomMeetings(client)
     autoCreateStyretMeetings(client)
     queenbeeMonitor(client)
-    autoSyncZammad(client)
     heartbeat()
     log('info', 'Discord bot ready', {
         event: 'bot.ready',
@@ -45,10 +42,6 @@ client.on<Events.InteractionCreate>(Events.InteractionCreate, async (interaction
 
 client.on(Events.ThreadCreate, async (thread: ThreadChannel) => {
     await channelTemplates(thread)
-})
-
-client.on(Events.MessageCreate, async (message: Message) => {
-    handleTickets(message)
 })
 
 client.on<Events.PresenceUpdate>(Events.PresenceUpdate, async (oldPresence: Presence | null, newPresence: Presence) => {

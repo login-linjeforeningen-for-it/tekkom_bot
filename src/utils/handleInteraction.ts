@@ -1,15 +1,11 @@
-import Autocomplete from '#utils/autocomplete/autoComplete.ts'
 import validCommands, { exceptions } from '#utils/valid.ts'
 import handleComponents from '#utils/handleComponents.ts'
-import getID from '#utils/tickets/getID.ts'
 import { DiscordClient } from '#interfaces'
 import type {
-    AutocompleteInteraction,
     CacheType,
     ChatInputCommandInteraction,
     Interaction,
 } from 'discord.js'
-import { InteractionType } from 'discord.js'
 
 type HandleInteractionProps = {
     interaction: Interaction<CacheType>
@@ -17,13 +13,6 @@ type HandleInteractionProps = {
 }
 
 export default async function handleInteraction({ interaction, client }: HandleInteractionProps) {
-    if (interaction.type === InteractionType.ApplicationCommandAutocomplete) {
-        const autocompleteInteraction = interaction as AutocompleteInteraction<'cached'>
-
-        Autocomplete(autocompleteInteraction)
-        return
-    }
-
     const chatInteraction = interaction as ChatInputCommandInteraction
 
     if (!interaction.isChatInputCommand() && !('customId' in interaction)) {
@@ -40,7 +29,7 @@ export default async function handleInteraction({ interaction, client }: HandleI
         validCommands.includes(chatInteraction.commandName)
         || ('customId' in interaction && validCommands.includes(interaction.customId as string))
     ) {
-        return handleComponents(chatInteraction, getID(chatInteraction.commandName))
+        return handleComponents(chatInteraction, undefined)
     } else {
         // @ts-expect-error
         const customId = interaction.customId

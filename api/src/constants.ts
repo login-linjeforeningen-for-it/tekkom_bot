@@ -16,8 +16,7 @@ const requiredEnvironmentVariables = [
     'TEKKOM_BOT_API_TOKEN',
     'WEBHOOK_URL',
     'SPOTIFY_CLIENT_ID',
-    'SPOTIFY_CLIENT_SECRET',
-    'ZAMMAD_TOKEN'
+    'SPOTIFY_CLIENT_SECRET'
 ]
 
 const missingVariables = requiredEnvironmentVariables.filter(
@@ -64,9 +63,7 @@ const config = {
     SPOTIFY_API_TRACK_URL: 'https://api.spotify.com/v1/tracks',
     SPOTIFY_API_EPISODE_URL: 'https://api.spotify.com/v1/episodes',
     SPOTIFY_API_TOKEN_URL: 'https://accounts.spotify.com/api/token',
-    SPOTIFY_API_TOKEN: btoa(`${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`),
-    ZAMMAD_TOKEN: env.ZAMMAD_TOKEN,
-    ZAMMAD_API: 'https://zammad.login.no/api/v1'
+    SPOTIFY_API_TOKEN: btoa(`${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`)
 }
 
 export default config

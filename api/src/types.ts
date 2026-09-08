@@ -267,46 +267,4 @@ declare global {
         imageText?: string
     }
 
-    type Ticket = {
-        id: number
-        ticket_id: number
-        type_id: number
-        sender_id: number
-        from: string
-        to: string | null
-        cc: string | null
-        subject: string | null
-        message_id: string | number | null
-        message_id_md5: string
-        in_reply_to: number | null
-        content_type: string
-        references: string | null
-        body: string
-        internal: boolean
-        preferences: {
-            delivery_article_id_related: number
-            delivery_message: boolean
-            notification: boolean
-        },
-        updated_by_id: number
-        created_by_id: number
-        created_at: string
-        updated_at: string
-        origin_by_id: null
-        reply_to: string | number | null
-        attachments: Attachment[]
-        created_by: string
-        updated_by: string
-        type: string
-        sender: string
-        time_unit: unknown
-    }
-
-    type Attachment = {
-        id: number
-        store_file_id: number
-        filename: string
-        size: string
-        preferences: object[]
-    }
 }

@@ -18,16 +18,6 @@ import getDebt from './handlers/debt/get.ts'
 import postDebt from './handlers/debt/post.ts'
 import deleteDebt from './handlers/debt/delete.ts'
 import getGameActivity from './handlers/activity/getGame.ts'
-import closeTicket from './handlers/dizambee/closeTicket.ts'
-import postUser from './handlers/dizambee/postUser.ts'
-import postTicket from './handlers/dizambee/postTicket.ts'
-import putTicket from './handlers/dizambee/putTicket.ts'
-import getTicketMessages from './handlers/dizambee/getTicketMessages.ts'
-import getAttachment from './handlers/dizambee/getAttachment.ts'
-import getTicket from './handlers/dizambee/getTicket.ts'
-import getUser from './handlers/dizambee/getUser.ts'
-import getUsers from './handlers/dizambee/getUsers.ts'
-import getGroups from './handlers/dizambee/getGroups.ts'
 import getDatabaseHealth from './handlers/health/getDatabase.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -65,24 +55,4 @@ export default async function apiRoutes(fastify: FastifyInstance, _: FastifyPlug
     fastify.get('/debt', getDebt)
     fastify.post('/debt', postDebt)
     fastify.delete('/debt', deleteDebt)
-
-    // dizambee
-    // get
-    fastify.get('/dizambee/groups', getGroups)
-    fastify.get('/dizambee/users', getUsers)
-    fastify.get('/dizambee/users/:userID', getUser)
-    fastify.get('/dizambee/tickets/:ticketID', getTicket)
-    fastify.get('/dizambee/attachment/:id/:ticket_id/:attachment_id', getAttachment)
-    fastify.get('/dizambee/ticket/:ticketID/:recipient', getTicketMessages)
-
-    // put
-    fastify.put('/dizambee/ticket/:ticketID', putTicket)
-    fastify.put('/dizambee/ticket/:ticketID/:author/:recipient', putTicket)
-
-    // post
-    fastify.post('/dizambee/ticket', postTicket)
-    fastify.post('/dizambee/users', postUser)
-
-    // delete
-    fastify.delete('/dizambee/ticket/:ticketID/:author', closeTicket)
 }
