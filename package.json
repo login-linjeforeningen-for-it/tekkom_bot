@@ -33,7 +33,6 @@
         "#package": "./package.json",
         "#utils/*": "./src/utils/*",
         "#components/*": "./src/components/*",
-        "#managed/*": "./src/managed/*",
         "#commands/*": "./src/commands/*",
         "#/*": "./src/*"
     }

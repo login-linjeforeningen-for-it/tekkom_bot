@@ -21,7 +21,6 @@ const page2 = [
     'registry                              Help for how to use the registry',
     'remove                              Removes a user or role from the current ticket',
     'reopen                               Reopens a archived ticket',
-    'roles                                   Creates a role builder message',
     'setup                                 Sets up the specified service',
     'tag                                      Info on how to tag a git commit',
 ]
@@ -29,7 +28,6 @@ const page2 = [
 const page3 = [
     'tagticket                           Adds tags to the current ticket',
     'ticket                                 Displays the create ticket message',
-    'updaterolemessage       Updates a role builder message',
     'version                               Displays the bots version number',
     'view                                    Select the ticket you want to view',
     'whitelist                            Whitelists the specified user',

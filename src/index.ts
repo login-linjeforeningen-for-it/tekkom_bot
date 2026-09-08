@@ -1,6 +1,5 @@
 import { installJsonConsoleLogger, log } from '#utils/jsonLogger.ts'
 import config from '#config'
-import { removeRole } from '#utils/roles.ts'
 import autoCreateTekKomMeetings from '#utils/meetings/autoCreateTekKomMeetings.ts'
 import handleTickets from '#utils/tickets/handler.ts'
 import autoSyncZammad from '#utils/tickets/autoSyncZammad.ts'
@@ -12,7 +11,6 @@ import handleListens from '#utils/activity/handleListens.ts'
 import handlePlays from '#utils/activity/handlePlays.ts'
 import checkAndHandleListenRepeats from '#utils/activity/checkAndHandleListenRepeats.ts'
 import handleInteraction from '#utils/handleInteraction.ts'
-import handleRoles from '#utils/handleRoles.ts'
 import setupClient from '#utils/setupClient.ts'
 import type { CacheType, ThreadChannel, Presence, Message, Interaction } from 'discord.js'
 import { Events } from 'discord.js'
@@ -24,7 +22,6 @@ const client = await setupClient()
 const lastListens: LastListens = new Map()
 
 client.once(Events.ClientReady, async () => {
-    handleRoles(client)
     autoCreateTekKomMeetings(client)
     autoCreateStyretMeetings(client)
     queenbeeMonitor(client)
@@ -48,21 +45,6 @@ client.on<Events.InteractionCreate>(Events.InteractionCreate, async (interaction
 
 client.on(Events.ThreadCreate, async (thread: ThreadChannel) => {
     await channelTemplates(thread)
-})
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-client.on(Events.MessageReactionRemove, async (reaction: any, user: any) => {
-    // Checks if a reaction is partial, and if so fetches the entire structure
-    if (reaction.partial) {
-        try {
-            await reaction.fetch()
-        } catch (error) {
-            console.log('Something went wrong when fetching the message:', error)
-            return
-        }
-    }
-
-    removeRole({ reaction, user })
 })
 
 client.on(Events.MessageCreate, async (message: Message) => {

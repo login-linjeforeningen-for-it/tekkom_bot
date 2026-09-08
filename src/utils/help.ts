@@ -34,10 +34,6 @@ const commands = {
     ping: 'Pings the bot. The bot replies \'Pong!\' if online. Use the command by typing the following: `/ping`',
     reopen: 'Reopens a archived ticket. Use the command by typing the following: `/reopen`. ' +
         'An interactive menu will be provided where you can select the ticket you want to reopen.',
-    roles: 'Creates a role builder message. Use the command by typing the following: `/roles`. ' +
-        'Only available to TekKom-Verv. Takes the title, description, roles and icons parameters. ' +
-        'This is the title and description at the top of the message, ' +
-        'and then the roles and icons are mapped to each other 1 to 1.',
     registry: 'Displays how to interact with Logins gitlab registry. Use the command by typing the following: `/registry`',
     remove: 'Removes a user or role from the current ticket. Use the command by typing the following: `/remove`. ' +
         'This will display an interactive menu where you can select the user or role you want to remove. ' +
@@ -57,10 +53,6 @@ const commands = {
     ticket: 'Creates a new ticket. Use the command by typing the following: `/ticket`. ' +
         'A modal will pop up asking you to enter the title of the ticket, and the ticket will be created automatically. ' +
         'You can enter the content, tag the ticket and add people to the ticket after creating it.',
-    updaterolemessage: 'Updates a role builder message. Use the command by typing the following: `/updaterolemessage`. ' +
-        'Only available to TekKom-Verv. Takes the title, description, roles and icons parameters. ' +
-        'This is the title and description at the top of the message, ' +
-        'and then the roles and icons are mapped to each other 1 to 1.',
     version: 'Displays the bots version number. Use the command by typing the following: `/version`',
     view: 'Select the ticket you want to view. Use the command by typing the following: `/view`. ' +
         'An interactive list of available tickets will be provided.',

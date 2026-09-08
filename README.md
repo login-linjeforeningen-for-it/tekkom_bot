@@ -26,7 +26,7 @@ Full documentation is available at [outline.login.no/s/tekkombot](https://outlin
 - **Service monitoring alerts** posted to Discord on critical events
 - **Minecraft server integration** for survival and creative servers
 - **Ticket management** for member requests
-- **User and role management** for the Login Discord server
+- **User management** for the Login Discord server
 
 ## Getting Started
 
@@ -74,8 +74,7 @@ All variables go in the root `.env` file.
 
 ## Project Structure
 
-- `src/commands/` - Slash command definitions (info, management, minecraft, tickets, users)
-- `src/managed/` - Managed background processes
+- `src/commands/` - Slash command definitions (info, management, minecraft, tickets)
 - `src/utils/` - Helper utilities
 - `src/config.ts` - Configuration and environment variable loading
 - `api/` - Companion Fastify API for receiving external events
